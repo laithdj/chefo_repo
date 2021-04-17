@@ -31,6 +31,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(index);
 
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + '/dist'));
+console.log('working');
+app.get('/*', function(req,res) {
+    
+res.sendFile(path.join(__dirname+'/dist/index.html'));
+});
+
+
 app.listen(PORT, () => {
   console.log("Server is Listening on port :", PORT);
 });
