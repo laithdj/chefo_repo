@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "filldata": "node ./server/filldata.js > ./server/data.json",
     "server": "json-server --watch ./server/data.json",
-    "postinstall": "ng build --aot -prod"
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
