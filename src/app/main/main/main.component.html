@@ -1,0 +1,38 @@
+<div class="w-100">
+  <mdb-carousel class="carousel slide carousel-fade" [animation]="'fade'">
+    <mdb-carousel-item>
+      <div class="view w-100">
+        <img class="d-block w-100" height="300px" src="https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg" alt="Third slide">
+        <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div>
+      </div>
+      <div class="carousel-caption" style="background-color: white;">
+        <form class="form-inline md-form form-sm align-center" style="padding:10px">
+          <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
+          <input class="form-control form-control-sm ml-3 w-75"  type="text" placeholder="Pasta" aria-label="Search" [(ngModel)]="name" name="id"
+            mdbInput>
+            <a mdbBtn  class="waves-light orange darken-4" (click)="searchCourse()" mdbWavesEffect 
+            >Search</a>
+        </form>
+      </div>
+    </mdb-carousel-item>
+  </mdb-carousel>
+  <!-- Card -->
+  <div class="spinner-border text-unique cntre" role="status" *ngIf="courseLoaded">
+    <span class="sr-only">Loading...</span>
+  </div>
+<hr/>
+  <div class="row" *ngIf="!courseLoaded">
+    <div class="col-md-3" *ngFor="let course of courses" >
+      <!--Card-->
+      <mdb-card cascade="true" narrower="true">
+        <!--Card image-->
+        <div class="view view-cascade overlay waves-light"  mdbWavesEffect>
+          <mdb-card-img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg" [routerLink]="['results']"></mdb-card-img>
+        </div>
+        <!--/Card image-->
+        <!--/.Card content-->
+      </mdb-card> <br/>
+      <!--/.Card-->
+    </div>  
+  </div>
+</div>

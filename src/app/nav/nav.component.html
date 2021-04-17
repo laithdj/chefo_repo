@@ -1,0 +1,60 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark orange darken-4
+" [containerInside]="false">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" href="#">chefo</a></mdb-navbar-brand>
+    <!-- Collapsible content -->
+    <links>
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link waves-light" mdbWavesEffect>Featured<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" [routerLink]="['login']" mdbWavesEffect>Join</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect>How it works</a>
+        </li>
+        <!-- Dropdown -->
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link  waves-light" mdbWavesEffect>
+            Categories<mdb-icon fab icon="buromobelexperte"></mdb-icon></a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Mexican</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Indian</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Middle Eastern</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Italian</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Bakery</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Bar</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Other</a>
+          </div>
+        </li>
+  
+      </ul>
+      <!-- Links -->
+  
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+
+        <li class="nav-item">
+          <a class="nav-link">
+            <div class="btn-group" mdbDropdown>
+              <mdb-icon fas icon="user"  mdbDropdownToggle></mdb-icon>
+              <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+                <a class="dropdown-item" [routerLink]="['login']">Account</a>
+                <a class="dropdown-item" href="#">Create Course</a>
+                <a class="dropdown-item" href="#">My Courses</a>
+                <a class="dropdown-item" href="#">My Cart</a>
+                <div class="divider dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Log Out</a>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </links>
+    <!-- Collapsible content -->
+  
+  </mdb-navbar>
+  <!--/.Navbar-->

@@ -1,0 +1,47 @@
+<form class="form-inline md-form form-sm align-center" style="padding:10px">
+  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" mdbInput>
+</form>
+<!-- Card -->
+<div class="row">
+  <!--
+    <div class="col-md-3" *ngFor="let course of courses">
+      <mdb-card cascade="true" narrower="true">
+        <div class="view view-cascade overlay waves-light" mdbWavesEffect>
+          <mdb-card-img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg"></mdb-card-img>
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <mdb-card-body cascade="true" class="text-center">
+          <h5 class="pink-text">
+             {{course.category}}</h5>
+          <h4 class="card-title">{{course.name}}</h4>
+          <mdb-card-text>
+            {{course.description}}
+          </mdb-card-text>
+          <a mdbBtn color="unique" class="waves-light" mdbWavesEffect [routerLink]="['details/' , course._id]"
+          >Enrol</a>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  -->
+  <div class="col-md-2">
+    <mdb-card cascade="true" narrower="true">
+      <div class="view view-cascade overlay waves-light" mdbWavesEffect>
+        <mdb-card-img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg"></mdb-card-img>
+
+      </div>
+      <mdb-card-body cascade="true" class="text-center">
+        <h5 class="orange-text">
+          Mexican</h5>
+        <h4 class="card-title">Make Quantos Tacos</h4>
+        <mdb-card-text>
+          This tutorial will show you how to make the best mexican tacos there is 
+        </mdb-card-text>
+        <h5 class="orange-text">
+          $49.99</h5>
+        <a mdbBtn color="unique" class="waves-light orange darken-4" mdbWavesEffect [routerLink]="['../details/' , '5fc98448d011e000043a1441']">Enrol</a>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>
