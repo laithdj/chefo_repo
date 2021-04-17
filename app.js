@@ -32,11 +32,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(index);
 
 // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist/<name-of-app>'));
 console.log('working');
-app.get('/*', function(req,res) {
+app.get('*', function(req,res) {
     
-res.sendFile(path.join(__dirname+'/dist/index.html'));
+res.sendFile(path.join(__dirname, '/dist/<name-of-app>/index.html'));
 });
 
 
