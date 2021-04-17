@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../shared/main.service';
-import { Course, Instructor } from '../../shared/models/courses';
+import { Instructor } from '../../shared/models/courses';
+import { Course } from '../../models/Course';
+import { Category } from '../../models/Category';
 export class Search {
   name?: string;
   courseCategory?: string;
@@ -15,26 +17,39 @@ export class MainComponent implements OnInit {
 
   constructor(private router: Router, private mainservice: MainService) { }
   courses: Course[] = new Array();
+  categories: Category[] = new Array();
   instructors: Instructor[] = new Array();
-
   search: Search = new Search();
   name: string = '';
   courseLoaded = true;
+  
   ngOnInit() {
-    this.getFeatureCourse();
-    this.getFeatureInstructor();
+    this.getCategories();
   }
   details() {
     this.router.navigate(['/details']);
   }
-  getFeatureCourse() {
-    this.mainservice.getCourses().subscribe(data => {
+
+  getCategories() {
+    this.mainservice.getCategories().subscribe(data => {
       if (data) {
-        this.courses = data.Courses.splice(0, 4);
+        this.categories = data;
         this.courseLoaded = false;
       }
       console.log(this.courses);
     });
+  }
+  createCourse() {
+    /*
+    let course:Course = new Course;
+    course.name = 'laith';
+
+    this.mainservice.createCourse(course).subscribe(data => {
+      if (data) {
+
+      }
+    });
+    */
   }
   getFeatureInstructor() {
     this.mainservice.getInstructors().subscribe(data => {
@@ -47,9 +62,6 @@ export class MainComponent implements OnInit {
     });
   }
 
-  check(e: any){
-    console.log(e);
-  }
   searchCourse() {
     console.log(this.name);
     this.router.navigate(['/results', this.name , '']);

@@ -1,9 +1,8 @@
 
-<button type="button" mdbBtn color="primary" class="float-right" mdbWavesEffect>+ Create Course</button>
+<button type="button" mdbBtn color="primary" class="float-right" [routerLink]="['create-course']" mdbWavesEffect>+ Create Course</button>
 <br>
 <br>
 <br>
-
 <div class="row">
     <!--
       <div class="col-md-3" *ngFor="let course of courses">
@@ -41,7 +40,7 @@
           </mdb-card-text>
           <h5 class="orange-text">
             $49.99</h5>
-          <a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['../details/' , '5fc98448d011e000043a1441']">Edit</a>
+          <a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['edit-course']">Edit</a>
         </mdb-card-body>
       </mdb-card>
     </div>

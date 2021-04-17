@@ -5,7 +5,7 @@
         <div class="col-lg-5">
             <!-- Featured image -->
             <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4 waves-light" mdbWavesEffect>
-                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg"
+                <img class="img-fluid" src={{course.image}}
                     alt="Sample image">
                 <a>
                     <div class="mask rgba-white-slight"></div>
@@ -31,7 +31,7 @@
             </div>
 -->
             <div class="justify-content-center">
-              <a mdbBtn color="unique" class="w-75 orange darken-4"  mdbWavesEffect>Start</a>
+              <a mdbBtn color="unique" class="w-75 orange darken-4" [routerLink]="['../../video-player/' , course.id]" mdbWavesEffect>Start</a>
           </div>
         </div>
         <!-- Grid column -->

@@ -1,0 +1,6 @@
+::ng-deep .card-title{
+    font-size: 14px !important;
+}
+::ng-deep .img-fluid {
+    height:350px;
+    }

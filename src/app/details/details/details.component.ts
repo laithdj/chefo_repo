@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MainService } from 'src/app/shared/main.service';
-import { Course } from 'src/app/shared/models/courses';
+import { MainService } from '../../shared/main.service';
+import { Course } from '../../models/Course';
 
 @Component({
   selector: 'app-details',
@@ -21,12 +21,12 @@ export class DetailsComponent implements OnInit {
   ngOnInit() {
   }
   getCourse(course:any){
-    this.mainservice.getCourse(course).subscribe(data => {
+    this.mainservice.getItem(course).subscribe(data => {
     //  this.courses  =  data.Courses;
       console.log(data);
        // console.log(this.products);Array<object>
-       if(data.courseDetails.length > 0){
-        this.course = data.courseDetails[0];
+       if(data){
+        this.course = data;
         console.log(this.course)
        }
     });
