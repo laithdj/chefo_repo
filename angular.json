@@ -128,5 +128,8 @@
         }
       }
     }},
-  "defaultProject": "coursetube"
-}
+    "defaultProject": "coursetube",
+    "cli": {
+      "analytics": "440a0f93-5d19-49a3-a588-374985798bc7"
+    }
+  }

@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "node app.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "filldata": "node ./server/filldata.js > ./server/data.json",
     "server": "json-server --watch ./server/data.json",
+    "postinstall": "ng build --prod && npm run server",
     "heroku-postbuild": "ng build --prod"
   },
   "private": true,
