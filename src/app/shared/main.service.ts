@@ -13,7 +13,6 @@ import { Category } from '../models/Category';
 })
 export class MainService {
   // cartdata: any = [];
-  base_url: string;
   course: Course = new Course();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
