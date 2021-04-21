@@ -31,9 +31,9 @@ export class ResultsComponent implements OnInit {
     });
   }
   getCourses() {
-    this.mainservice.getCourses().subscribe(data => {
-      if (data) {
-        this.courses = data.filter(c => c.category === this.category);;
+    this.mainservice.getCourses().subscribe(res => {
+      if (res.data) {
+        this.courses = res.data.filter(c => c.category === this.category);;
     //    this.courses.filter(c => c.category === this.category);
         //  this.courseLoaded = false;
       }

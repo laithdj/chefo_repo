@@ -10,6 +10,8 @@ module.exports = {
                 price: req.body.price,
                 category: req.body.category,
                 courseCategory: req.body.courseCategory,
+                courseVids: req.body.courseVids,
+                image: req.body.image,
                 students: req.body.students,
                 rating: req.body.rating,
             });
@@ -22,7 +24,7 @@ module.exports = {
     
     getCourseById: async (req, res) => {
         try {
-            Course.find({ _id: req.params.courseId }, 'name description instructor price category courseCategory students rating').populate('course').exec(async (err, courseDetails) => {
+            Course.find({ _id: req.params.courseId }, 'name description instructor price category courseCategory courseVids image students rating').populate('course').exec(async (err, courseDetails) => {
                 if (err)
                     console.log(err);
                 else {
@@ -41,8 +43,8 @@ module.exports = {
 
     getAllCourses: async (req, res) => {
         try {
-            let Courses = await Course.find({}).sort({ created_at: -1 });
-            res.send({ "Success": true, Courses });
+            let data = await Course.find({}).sort({ created_at: -1 });
+            res.send({ "Success": true, data });
         } catch (err) {
             res.send({ "Success": false, err })
         }

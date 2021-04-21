@@ -26,7 +26,7 @@ export class DetailsComponent implements OnInit {
       console.log(data);
        // console.log(this.products);Array<object>
        if(data){
-        this.course = data;
+        this.course = data.courseDetails[0];
         console.log(this.course)
        }
     });

@@ -29,28 +29,38 @@ export class MainComponent implements OnInit {
   details() {
     this.router.navigate(['/details']);
   }
-
-  getCategories() {
-    this.mainservice.getCategories().subscribe(data => {
+  registerCategory(){
+/*
+    this.mainservice.registerCategory(element).subscribe(data => {
       if (data) {
-        this.categories = data;
+      }
+    });
+*/
+  }
+  getCategories() {
+    this.mainservice.getCategories().subscribe(response => {
+      if (response.data) {
+        console.log(response.data);
+        this.categories = response.data;
         this.courseLoaded = false;
       }
-      console.log(this.courses);
     });
   }
   createCourse() {
     /*
-    let course:Course = new Course;
-    course.name = 'laith';
-
-    this.mainservice.createCourse(course).subscribe(data => {
-      if (data) {
-
+    let course = [
+      {
       }
-    });
-    */
+    ]
+    course.forEach(element => {
+      this.mainservice.createCourse(element).subscribe(data => {
+        if (data) {
+  
+        }
+      });
+    });    */
   }
+
   getFeatureInstructor() {
     this.mainservice.getInstructors().subscribe(data => {
       if (data) {

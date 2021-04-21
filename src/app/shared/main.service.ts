@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Course } from '../models/Course';
+import { Category } from '../models/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class MainService {
   course: Course = new Course();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
+  base_url = 'http://localhost:8080/';
 
   // product_id: number;
   constructor(private http: HttpClient) {
@@ -26,6 +28,17 @@ export class MainService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
+  }
+    
+  registerCategory(c : Category) {
+
+    return this.http.post<any>(this.base_url + 'registerCategory', c ,{})
+      .pipe(map(data => {
+        if (data) {
+        }
+        console.log(data);
+        return data;
+      }));
   }
   /*
   getCourses() {
@@ -134,7 +147,7 @@ export class MainService {
   
   createCourse(item:Course): Observable<Course> {
     return this.http
-      .post<Course>(this.base_path, JSON.stringify(item), this.httpOptions)
+      .post<Course>(this.base_url + 'createCourse', JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -142,9 +155,9 @@ export class MainService {
   }
 
   // Get single Employee data by ID
-  getItem(id): Observable<Course> {
+  getItem(id): Observable<any> {
     return this.http
-      .get<Course>(this.base_path + '/' + id)
+      .get<Course>(this.base_url + 'getCourse/' + id)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -162,7 +175,7 @@ export class MainService {
   }
   getCourses(): Observable<any> {
     return this.http
-      .get<any>(this.base_path)
+      .get<any>(this.base_url + 'getCourse')
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -170,7 +183,7 @@ export class MainService {
   }
   getCategories(): Observable<any> {
     return this.http
-      .get<any>(this.base_category)
+      .get<any>(this.base_url + 'getCategories')
       .pipe(
         retry(2),
         catchError(this.handleError)

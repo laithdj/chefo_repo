@@ -5,10 +5,10 @@ let multer = require("multer"),
   mongoose = require("mongoose"),
   cors = require("cors"),
   app = express(),
-  index = require('./backend-files/routes/index');
+  index = require('./routes/index');
 require('dotenv').config();
 
-mongoose.connect(`mongodb+srv://learningdb:udemy0987@learning-db.8mmrf.mongodb.net/learning-db?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/chefo?retryWrites=true&w=majority`, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -30,15 +30,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(index);
-
-// Serve only the static files form the dist directory
-console.log('working');
-app.get('*', function(req,res) {
-  console.log('working');
-
-res.sendFile(path.join(__dirname, 'dist','index.html'));
-});
-
 
 app.listen(PORT, () => {
   console.log("Server is Listening on port :", PORT);

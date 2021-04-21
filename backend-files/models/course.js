@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 
+let VideoItems = new mongoose.Schema({ name: String , src: String , type:String });
 let courseSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -22,6 +23,14 @@ let courseSchema = new mongoose.Schema({
         default: null
     },
     courseCategory : {
+        type: [String],
+        default: null
+    },
+    courseVids : {
+        type: [VideoItems],
+        default: null
+    },
+    image : {
         type: String,
         default: null
     },

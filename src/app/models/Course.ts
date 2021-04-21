@@ -1,7 +1,7 @@
 import { VideoItems } from "./Video";
 
 export class Course {
-    id:number;
+    _id:number;
     name?: string;
     description?: string;
     instructor?: string;

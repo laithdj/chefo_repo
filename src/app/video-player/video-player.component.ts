@@ -31,8 +31,9 @@ export class VideoPlayerComponent implements OnInit {
   ngOnInit(): void { }
   getCourse(course:any){
     this.mainservice.getItem(course).subscribe(data => {
+      console.log(data.courseDetails[0]);
        if(data){
-        this.course = data;
+        this.course = data.courseDetails[0];
         this.videoItems = this.course.courseVids;
         this.currentVideo = this.videoItems[this.activeIndex];
 
