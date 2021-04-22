@@ -8,7 +8,7 @@ let multer = require("multer"),
   index = require('./routes/index');
 require('dotenv').config();
 
-mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/chefo?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://learningdb:udemy0987@learning-db.8mmrf.mongodb.net/learning-db?retryWrites=true&w=majority`, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
