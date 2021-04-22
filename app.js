@@ -5,7 +5,7 @@ let multer = require("multer"),
   mongoose = require("mongoose"),
   cors = require("cors"),
   app = express(),
-  index = require('./routes/index');
+  index = require('./backend-files/routes/index');
 require('dotenv').config();
 
 mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/chefo?retryWrites=true&w=majority`, {
