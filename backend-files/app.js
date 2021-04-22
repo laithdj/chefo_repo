@@ -5,7 +5,7 @@ let multer = require("multer"),
   mongoose = require("mongoose"),
   cors = require("cors"),
   app = express(),
-  index = require('./backend-files/routes/index');
+  index = require('./routes/index');
 require('dotenv').config();
 
 mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/chefo?retryWrites=true&w=majority`, {
@@ -30,7 +30,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(index);
-
 // Serve only the static files form the dist directory
 console.log('working');
 app.get('*', function(req,res) {
