@@ -16,7 +16,7 @@ export class MainService {
   course: Course = new Course();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
-  base_url = 'http://localhost:8080/';
+  base_url = 'https://chefo.herokuapp.com/';
 
   // product_id: number;
   constructor(private http: HttpClient) {
