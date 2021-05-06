@@ -14,7 +14,7 @@ export class Step1Component implements OnInit {
   ngOnInit(): void {
   }
   submit(c:Course){
-     // console.log(c);
+      console.log(c);
       this.mainservice.course = c;
   }
 }

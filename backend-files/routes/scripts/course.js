@@ -11,7 +11,6 @@ module.exports = {
                 category: req.body.category,
                 courseCategory: req.body.courseCategory,
                 courseVids: req.body.courseVids,
-                image: req.body.image,
                 students: req.body.students,
                 rating: req.body.rating,
             });

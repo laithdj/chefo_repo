@@ -12,4 +12,5 @@ export class Course {
     image?:string;
     students?: number;
     rating?: number;
+    productImage?:any;
 }

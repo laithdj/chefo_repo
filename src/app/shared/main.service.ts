@@ -16,7 +16,8 @@ export class MainService {
   course: Course = new Course();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
-  base_url = 'https://chefo.herokuapp.com/';
+ // base_url = 'http://chefo.herokuapp.com/';
+  base_url = 'http://localhost:8080/';
 
   // product_id: number;
   constructor(private http: HttpClient) {
@@ -144,9 +145,9 @@ export class MainService {
 
   // Create a new item
   
-  createCourse(item:Course): Observable<Course> {
+  createCourse(item:any): Observable<any> {
     return this.http
-      .post<Course>(this.base_url + 'createCourse', JSON.stringify(item), this.httpOptions)
+      .post<any>(this.base_url + 'createCourse',item, {})
       .pipe(
         retry(2),
         catchError(this.handleError)

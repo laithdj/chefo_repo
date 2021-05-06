@@ -23,6 +23,8 @@ mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/ch
 
 app.use(cors({ origin: '*' }));
 app.use(express.static("public"));
+app.use('/uploads', express.static('uploads'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use(bodyParser.json());
@@ -35,7 +37,7 @@ console.log('working');
 app.get('*', function(req,res) {
   console.log('working');
 
-res.sendFile(path.join(__dirname, 'dist','index.html'));
+// res.sendFile(path.join(__dirname, 'dist','index.html'));
 });
 
 

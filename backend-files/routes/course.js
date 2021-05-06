@@ -1,7 +1,9 @@
 let express = require('express');
 let router = express.Router(),
 course = require('./scripts/course');
+const multer = require('multer');
 
+  const upload = multer({dest:'uploads/'});
 // MainRoutes
 router.get('/', (req, res) => {
     res.send('Udemy Backend Works!')
@@ -15,9 +17,10 @@ router.get('/getCourse/:courseId', (req, res) => {
     course.getCourseById(req, res);
 });
 // Create Courses
-router.post('/createCourse', (req, res) => {
+router.post('/createCourse',upload.single('productImage'), (req, res) => {
     course.registerCourses(req, res);
 });
+
 // Delete Course By ID
 router.get('/deleteCourse/:courseId', (req, res) => {
     course.deleteCourseById(req, res);

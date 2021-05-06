@@ -1,20 +1,18 @@
 <!-- Default form register -->
-<form class="text-center border border-light p-5">
-    <p class="h4 mb-4">Upload Course</p>
-    <div *ngFor="let video of videos">
-      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" [(ngModel)]="video.name" name="name" placeholder="Video Title">
-      <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Upload Video">
-      <hr>
-    </div>
-    <button mdbBtn color="info" block="true" class="my-4 w-25" type="submit" (click)="addRow()">+ Add</button>
+<p class="h4 mb-4">Upload Course</p>
+<div *ngFor="let video of videos; let i = index">
+  <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" [(ngModel)]="videos[i].name" placeholder="Video Title">
+  <input type="file" id="file" multiple (change)="getFileDetails($event)">    
+  <hr>
+</div>
+<button mdbBtn color="info" block="true" class="my-4 w-25" type="submit" (click)="addRow()">+ Add</button>
 <br><br>
 <br><br>
-   <div class="row">
-    </div>
-    <!-- Sign up button -->
-    <button mdbBtn color="info" block="true" routerLink="../step-3" class="my-4" type="submit">Next</button>
-    <button mdbBtn color="info" block="true" routerLink="" class="my-4" type="submit">Back</button>
-    <!-- Social register -->
-    <hr>
-  </form>
-  <!-- Default form register -->
+<div class="row">
+</div>
+<!-- Sign up button -->
+<button mdbBtn color="info" block="true" routerLink="../step-3" class="my-4" type="submit" (click)="uploadFiles()">Next</button>
+<button mdbBtn color="info" block="true" routerLink="" class="my-4" type="submit">Back</button>
+<!-- Social register -->
+<hr>
+<!-- Default form register -->

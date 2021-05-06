@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -27,13 +27,18 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) {
 
     this.router.events.subscribe((route:any) => {
       this.currentUrl = route.url;
 
       this.specialPage = this.specialPages.indexOf(this.currentUrl) !== -1;
+    });
+    this.route.params.subscribe(params => {
+      let courseId = params.id;
+      console.log(params.id);
     });
 
   }
