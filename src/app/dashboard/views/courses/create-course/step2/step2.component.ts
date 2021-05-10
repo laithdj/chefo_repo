@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VideoItems } from '../../../../../models/Video';
 import { MainService } from '../../../../../shared/main.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-step2',
@@ -10,9 +11,10 @@ import { MainService } from '../../../../../shared/main.service';
 export class Step2Component implements OnInit {
   myFiles: string[] = [];      
   selectedFile: File = null;
-
+  errorString = '';
+  error = false;
   videos:VideoItems[] = new Array();
-  constructor(private mainService:MainService) { }
+  constructor(private mainService:MainService, private route: Router) { }
 
   ngOnInit() {
     this.videos[0] = new VideoItems();
@@ -26,8 +28,21 @@ export class Step2Component implements OnInit {
     console.log(this.videos);
   }
   submit(){
-    this.mainService.course.courseVids = this.videos;
-    console.log(this.mainService.course);
+    this.errorString = ''
+    if(!this.videos[0].name){
+     this.errorString = this.errorString + ' ' + 'Please add a name for the video.';
+    }
+    if(!this.videos[0].src){
+     this.errorString = this.errorString + ' ' + 'Please add a video for the course.';
+    }
+
+    if(this.errorString.length > 1){
+      this.error = true;
+    }else{
+      this.mainService.course.courseVids = this.videos;
+      this.route.navigate(['dashboard/courses/create-course/step-3']);
+    }
+
   }
   getFileDetails(e:any , index:number) {      
     this.selectedFile = <File>e.target.files[0];

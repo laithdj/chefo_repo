@@ -19,12 +19,7 @@ export class CoursesComponent implements OnInit {
     this.mainservice.getCourses().subscribe(res => {
       if (res.data) {
        this.courses = res.data
-       // this.courses.filter(c => c.category === this.category);
-      //  this.courseLoaded = false;
-        console.log(res);
-
       }
-     // console.log(this.courses);
     });
   }
 }

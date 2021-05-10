@@ -1,10 +1,11 @@
-    <p class="h4 mb-4">Preview</p>
-    <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4"  name="courseImage" [(ngModel)]="course.image" placeholder="Course Main Image">
+    <p class="h4 mb-4">Add Course Image</p>
     <input type="file" id="file" multiple (change)="getFileDetails($event)">    
 
-    <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Upload Teaser">
 <br><br>
 <br><br>
+<div *ngIf="error">
+  <p style="color:red;">{{errorString}}</p>
+</div>
    <div class="row">
     </div>
     <!-- Sign up button -->

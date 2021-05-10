@@ -15,6 +15,8 @@ export class Step3Component implements OnInit {
   myFiles: string[] = [];      
   selectedFile: File = null;
   selectedFileUrl = '';
+  errorString = '';
+  error = false;
   constructor(private mainService:MainService,private http: HttpClient,private route:Router) { }
 
   ngOnInit(): void {
@@ -36,10 +38,20 @@ export class Step3Component implements OnInit {
     }
   
   uploadFiles() {
-    this.mainService.createCourse(this.mainService.course).subscribe(response => {
-      if(response){
-        this.route.navigate(['dashboard/courses']);
-      }
-    });
+    this.errorString = ''
+
+    if(!this.mainService.course.image){
+     this.errorString = this.errorString + ' ' + 'Please add a image for the course.';
+    }
+
+    if(this.errorString.length > 1){
+      this.error = true;
+    }else{
+      this.mainService.createCourse(this.mainService.course).subscribe(response => {
+        if(response){
+          this.route.navigate(['dashboard/courses']);
+        }
+      });
+    }
   }
 }

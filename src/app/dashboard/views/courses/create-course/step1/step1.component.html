@@ -10,14 +10,17 @@
       </select>
     </div>
 <br><br>
-<input type="text" id="defaultRegisterFormEmail" name="coursePrice"  class="form-control mb-4 w-50" placeholder="$49.99" [(ngModel)]="course.price">
+<input type="number" id="defaultRegisterFormEmail" name="coursePrice"  class="form-control mb-4 w-50" placeholder="$49.99" [(ngModel)]="course.price">
 <textarea class="form-control" aria-label="With textarea" name="courseDesc"  placeholder="Description" [(ngModel)]="course.description"></textarea>
 <br><br>
+<div *ngIf="error">
+  <p style="color:red;">{{errorString}}</p>
+</div>
    <div class="row">
 
     </div>
     <!-- Sign up button -->
-    <button mdbBtn color="info" block="true" routerLink="../step-2" (click)="submit(course)" class="my-4" type="submit">Next</button>
+    <button mdbBtn color="info" block="true" (click)="submit(course)" class="my-4" type="submit">Next</button>
     <!-- Social register -->
 
     <hr>

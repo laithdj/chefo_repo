@@ -8,10 +8,13 @@
 <button mdbBtn color="info" block="true" class="my-4 w-25" type="submit" (click)="addRow()">+ Add</button>
 <br><br>
 <br><br>
+<div *ngIf="error">
+  <p style="color:red;">{{errorString}}</p>
+</div>
 <div class="row">
 </div>
 <!-- Sign up button -->
-<button mdbBtn color="info" block="true" routerLink="../step-3" class="my-4" type="submit" (click)="submit()">Next</button>
+<button mdbBtn color="info" block="true" class="my-4" type="submit" (click)="submit()">Next</button>
 <button mdbBtn color="info" block="true" routerLink="" class="my-4" type="submit">Back</button>
 <!-- Social register -->
 <hr>
