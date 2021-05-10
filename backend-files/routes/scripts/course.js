@@ -13,6 +13,7 @@ module.exports = {
                 courseVids: req.body.courseVids,
                 students: req.body.students,
                 rating: req.body.rating,
+                image:req.file
             });
             res.send({ "Success": true, "message": "Your Course has been Registered!" })
 

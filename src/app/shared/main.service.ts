@@ -145,9 +145,17 @@ export class MainService {
 
   // Create a new item
   
-  createCourse(item:any): Observable<any> {
+  upload(item:any): Observable<any> {
     return this.http
-      .post<any>(this.base_url + 'createCourse',item, {})
+      .post<any>(this.base_url + 'upload',item, {})
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+  createCourse(item:Course): Observable<any> {
+    return this.http
+      .post<Course>(this.base_url + 'createCourse',item, {})
       .pipe(
         retry(2),
         catchError(this.handleError)

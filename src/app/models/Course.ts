@@ -9,7 +9,7 @@ export class Course {
     category?: string;
     courseCategory?: string[];
     courseVids?: VideoItems[];
-    image?:string;
+    image?:any;
     students?: number;
     rating?: number;
     productImage?:any;

@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Course } from '../../../../../models/Course';
 import { MainService } from '../../../../../shared/main.service';
 import { HttpClient } from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -14,6 +13,7 @@ export class Step3Component implements OnInit {
   course:Course = new Course();
   myFiles: string[] = [];      
   selectedFile: File = null;
+  selectedFileUrl = '';
   constructor(private mainService:MainService,private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -25,24 +25,31 @@ export class Step3Component implements OnInit {
   }
   getFileDetails(e) {      
     //console.log (e.target.files);      
-
     this.selectedFile = <File>e.target.files[0]  
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = (event: any) => {
+    console.log(event.target.result);
+    this.selectedFileUrl = event.target.result;
+    }
   }
-  uploadFiles() {      
-    let frmData = new FormData(); 
-    console.log(this.selectedFile);     
-    frmData.append("productImage", this.selectedFile, this.selectedFile.name);
-    frmData.append("courseName", 'this');      
-      
-    this.mainService.course.productImage = this.selectedFile;
-    setTimeout(() => {
-      this.mainService.createCourse(frmData).subscribe(response => {
+  uploadFiles() {
+    // two api calls one to save file and one to save file location   
+    let frmData = new FormData();
+    frmData.append("productImage", this.selectedFile, this.selectedFile?.name);
+    console.log(this.selectedFile);
+    // this.mainService.course.productImage = this.selectedFile;
+    this.mainService.upload(frmData).subscribe(response => {
         if (response) {
           console.log(response);
         }
       });
-    }, 2000);
-
-    console.log(this.mainService.course);
+      // this.mainService.course.image = this.selectedFileUrl;
+      /*
+      this.mainService.createCourse(this.mainService.course).subscribe(response => {
+        if (response) {
+          console.log(response);
+        }
+      });*/
   }
 }

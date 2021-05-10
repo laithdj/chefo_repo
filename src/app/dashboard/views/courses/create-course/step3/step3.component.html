@@ -1,6 +1,6 @@
     <p class="h4 mb-4">Preview</p>
     <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4"  name="courseImage" [(ngModel)]="course.image" placeholder="Course Main Image">
-    <input type="file" id="file" multiple (change)="getFileDetails($event)">    
+    <input type="file" id="file" multiple (change)="getFileDetails($event)" [(ngModel)]="course.productImage">    
 
     <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Upload Teaser">
 <br><br>
