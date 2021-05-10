@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Course } from '../../../../../models/Course';
 import { MainService } from '../../../../../shared/main.service';
 import { HttpClient } from '@angular/common/http';
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class Step3Component implements OnInit {
   myFiles: string[] = [];      
   selectedFile: File = null;
   selectedFileUrl = '';
-  constructor(private mainService:MainService,private http: HttpClient) { }
+  constructor(private mainService:MainService,private http: HttpClient,private route:Router) { }
 
   ngOnInit(): void {
     this.course = this.mainService.course;
@@ -36,6 +37,9 @@ export class Step3Component implements OnInit {
   
   uploadFiles() {
     this.mainService.createCourse(this.mainService.course).subscribe(response => {
+      if(response){
+        this.route.navigate(['dashboard/courses']);
+      }
     });
   }
 }

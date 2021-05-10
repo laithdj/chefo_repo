@@ -9,35 +9,34 @@ import { MainService } from '../../../../../shared/main.service';
 })
 export class Step2Component implements OnInit {
   myFiles: string[] = [];      
+  selectedFile: File = null;
 
   videos:VideoItems[] = new Array();
-  constructor(private mainServce:MainService) { }
+  constructor(private mainService:MainService) { }
 
   ngOnInit() {
     this.videos[0] = new VideoItems();
+    this.videos[0].type = "video/mp4";
   }
   addRow(){
   //  this.videos[this.videos.length] = new VideoItems();
-    this.videos.push(new VideoItems());
+    let vid = new VideoItems();
+    vid.type = "video/mp4";
+    this.videos.push(vid);
     console.log(this.videos);
   }
   submit(){
-    this.mainServce.course.courseVids = this.videos;
-    console.log(this.mainServce.course);
+    this.mainService.course.courseVids = this.videos;
+    console.log(this.mainService.course);
   }
-  getFileDetails(e) {      
-    //console.log (e.target.files);      
-    for (var i = 0; i < e.target.files.length; i++) {      
-      this.myFiles.push(e.target.files[i]);      
-    } 
-    console.log(this.myFiles);     
-  }
-  uploadFiles() {      
-    const frmData = new FormData();      
-    for (var i = 0; i < this.myFiles.length; i++) {      
-      frmData.append("fileUpload", this.myFiles[i]);      
-    }      
-   console.log(frmData);
-  } 
-
+  getFileDetails(e:any , index:number) {      
+    this.selectedFile = <File>e.target.files[0];
+    let frmData = new FormData();
+    frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
+    this.mainService.uploadVideo(frmData).subscribe(response => {
+      if (response) {
+        this.videos[index].src = response.data.productImage?.substring(7);
+      }
+    });  
+    }
 }

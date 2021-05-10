@@ -24,7 +24,7 @@
       <vg-fullscreen></vg-fullscreen>
     </vg-controls>
 
-    <video #media [vgMedia]="media" [src]="currentVideo.src" id="singleVideo" preload="auto" crossorigin>
+    <video #media [vgMedia]="media" [src]="'https://chefo.herokuapp.com/uploads/' + currentVideo.src" id="singleVideo" preload="auto" crossorigin>
     </video>
   </vg-player>
 

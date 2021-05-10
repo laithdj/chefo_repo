@@ -153,6 +153,14 @@ export class MainService {
         catchError(this.handleError)
       )
   }
+  uploadVideo(item:any): Observable<any> {
+    return this.http
+      .post<any>(this.base_url + 'uploadVideo',item, {})
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
   createCourse(item:Course): Observable<any> {
     return this.http
       .post<Course>(this.base_url + 'createCourse',item, {})

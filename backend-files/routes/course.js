@@ -56,5 +56,24 @@ router.post("/upload", upload.single('productImage'), (req, res, next) => {
         });
       });
   });
+  router.post("/uploadVideo", upload.single('productVideo'), (req, res, next) => {
+    const product = new Product({
+      productImage: req.file.path 
+    });
+    product
+      .save()
+      .then(result => {
+        console.log(result);
+        res.status(201).json({
+          data: result,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          error: err
+        });
+      });
+  });
 
 module.exports = router;

@@ -29,18 +29,18 @@
     <div class="col-md-4" *ngFor="let course of courses;let i = index">
       <mdb-card cascade="true" narrower="true">
         <div class="view view-cascade overlay waves-light" mdbWavesEffect>
-          <mdb-card-img src='../../../../../assets/75f52603bf3d82008b5a684b2a074946'></mdb-card-img>
+          <mdb-card-img src='https://chefo.herokuapp.com/uploads/{{courses[i].image}}'></mdb-card-img>
         </div>
         <mdb-card-body cascade="true" class="text-center">
           <h5 class="orange-text">
-            Mexican</h5>
-          <h4 class="card-title">Make Quantos Tacos</h4>
+            {{courses[i].category}}</h5>
+          <h4 class="card-title">{{courses[i].name}}</h4>
           <mdb-card-text>
-            This tutorial will show you how to make the best mexican tacos there is 
+            {{courses[i].description}} 
           </mdb-card-text>
           <h5 class="orange-text">
-            $49.99</h5>
-          <a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['edit-course']">Edit</a>
+            $ {{courses[i].price}}</h5>
+          <!--<a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['edit-course']">Edit</a>-->
         </mdb-card-body>
       </mdb-card>
     </div>
