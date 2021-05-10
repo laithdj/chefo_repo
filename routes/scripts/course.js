@@ -1,4 +1,5 @@
 let Course = require('../../models/course');
+
 module.exports = {
 
     registerCourses: async function (req, res) {
@@ -11,9 +12,29 @@ module.exports = {
                 category: req.body.category,
                 courseCategory: req.body.courseCategory,
                 courseVids: req.body.courseVids,
-                image: req.body.image,
                 students: req.body.students,
                 rating: req.body.rating,
+                image:req.body.image
+            });
+            res.send({ "Success": true, "message": "Your Course has been Registered!" })
+
+        } catch (error) {
+            res.send({ "Success": false, err })
+        }
+    },
+    uploadImage: async function (req, res) {
+        try {
+            let contactUser = await Course.create({
+                name: req.body.name,
+                description: req.body.description,
+                instructor: req.body.instructor,
+                price: req.body.price,
+                category: req.body.category,
+                courseCategory: req.body.courseCategory,
+                courseVids: req.body.courseVids,
+                students: req.body.students,
+                rating: req.body.rating,
+                image:req.file
             });
             res.send({ "Success": true, "message": "Your Course has been Registered!" })
 
