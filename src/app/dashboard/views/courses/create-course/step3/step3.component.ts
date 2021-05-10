@@ -24,32 +24,19 @@ export class Step3Component implements OnInit {
     this.mainService.createCourse(this.mainService.course);
   }
   getFileDetails(e) {      
-    //console.log (e.target.files);      
-    this.selectedFile = <File>e.target.files[0]  
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = (event: any) => {
-    console.log(event.target.result);
-    this.selectedFileUrl = event.target.result;
-    }
-  }
-  uploadFiles() {
-    // two api calls one to save file and one to save file location   
+    this.selectedFile = <File>e.target.files[0];
     let frmData = new FormData();
     frmData.append("productImage", this.selectedFile, this.selectedFile?.name);
-    console.log(this.selectedFile);
-    // this.mainService.course.productImage = this.selectedFile;
     this.mainService.upload(frmData).subscribe(response => {
-        if (response) {
-          console.log(response);
-        }
-      });
-      // this.mainService.course.image = this.selectedFileUrl;
-      /*
-      this.mainService.createCourse(this.mainService.course).subscribe(response => {
-        if (response) {
-          console.log(response);
-        }
-      });*/
+      if (response) {
+        console.log(response.data.productImage);
+        this.mainService.course.image = response.data.productImage;
+      }
+    });  
+    }
+  
+  uploadFiles() {
+    this.mainService.createCourse(this.mainService.course).subscribe(response => {
+    });
   }
 }
