@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../shared/main.service';
-import { Instructor } from '../../shared/models/courses';
 import { Course } from '../../models/Course';
 import { Category } from '../../models/Category';
 export class Search {
@@ -18,7 +17,6 @@ export class MainComponent implements OnInit {
   constructor(private router: Router, private mainservice: MainService) { }
   courses: Course[] = new Array();
   categories: Category[] = new Array();
-  instructors: Instructor[] = new Array();
   search: Search = new Search();
   name: string = '';
   courseLoaded = true;
@@ -61,16 +59,7 @@ export class MainComponent implements OnInit {
     });    */
   }
 
-  getFeatureInstructor() {
-    this.mainservice.getInstructors().subscribe(data => {
-      if (data) {
-        this.instructors = data.Instructors;
-        this.courseLoaded = false;
-        console.log(data);
 
-      }
-    });
-  }
 
   searchCourse() {
     console.log(this.name);

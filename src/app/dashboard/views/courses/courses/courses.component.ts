@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MainService } from '../../../../shared/main.service';
+import { Course } from '../../../../models/Course';
 
 @Component({
   selector: 'app-courses',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mainservice: MainService) { }
+  courses: Course[] = new Array();
 
   ngOnInit(): void {
+    this.getCourses()
   }
+  getCourses() {
+    this.mainservice.getCourses().subscribe(res => {
+      if (res.data) {
+       this.courses = res.data
+       // this.courses.filter(c => c.category === this.category);
+      //  this.courseLoaded = false;
+        console.log(res);
 
+      }
+     // console.log(this.courses);
+    });
+  }
 }
