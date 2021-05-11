@@ -50,7 +50,7 @@ export class Step2Component implements OnInit {
     frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
     this.mainService.uploadVideo(frmData).subscribe(response => {
       if (response) {
-        this.videos[index].src = response.data.productImage?.substring(7);
+        this.videos[index].src = response.imageUrl;
       }
     });  
     }

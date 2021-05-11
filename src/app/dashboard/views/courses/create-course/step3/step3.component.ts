@@ -32,7 +32,7 @@ export class Step3Component implements OnInit {
     frmData.append("productImage", this.selectedFile, this.selectedFile?.name);
     this.mainService.upload(frmData).subscribe(response => {
       if (response) {
-        this.mainService.course.image = response.data.productImage?.substring(7);
+        this.mainService.course.image = response.imageUrl;
       }
     });  
     }

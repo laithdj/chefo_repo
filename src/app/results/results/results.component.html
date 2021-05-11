@@ -28,7 +28,7 @@
   <div class="col-md-3" *ngFor="let course of courses;let i = index">
     <mdb-card cascade="true" narrower="true">
       <div class="view view-cascade overlay waves-light" mdbWavesEffect>
-        <mdb-card-img src='https://chefo.herokuapp.com/uploads/{{courses[i].image}}'></mdb-card-img>
+        <mdb-card-img src={{courses[i].image}}></mdb-card-img>
       </div>
       <mdb-card-body cascade="true" class="text-center">
         <h5 class="orange-text">
