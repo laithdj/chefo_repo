@@ -93,8 +93,9 @@ module.exports = {
 
     updateCourses: async (req, res) => {
         const id = req.params.courseId;
+        const option = {new: true}
         try {
-            let contactUser = await Course.findOneAndUpdate(id,{
+            let contactUser = await Course.findByIdAndUpdate(id,{
                 name: req.body.name,
                 description: req.body.description,
                 instructor: req.body.instructor,
