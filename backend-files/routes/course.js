@@ -47,11 +47,13 @@ router.get('/getCourse/:courseId', (req, res) => {
 router.post('/upload',upload.single('productImage'), (req, res,next) => {
     course.registerCourses(req, res);
 });*/
-router.post('/createCourse', (req, res) => {
-    course.registerCourses(req, res);
+router.patch('/updateCourse/:courseId', (req, res) => {
+    course.updateCourses(req, res);
 });
 
-
+router.get('/createCourse', (req, res) => {
+  course.registerCourses(req, res);
+});
 // Delete Course By ID
 router.get('/deleteCourse/:courseId', (req, res) => {
     course.deleteCourseById(req, res);

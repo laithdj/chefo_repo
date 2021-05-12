@@ -1,16 +1,17 @@
-<form class="text-center border border-light p-5">
-    <p class="h4 mb-4">Preview</p>
-    <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Course Main Image">
-    <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Upload Teaser">
+<p class="h4 mb-4">Add Course Image</p>
+<img src={{course.image}} width="150" height="170" /><br />
+<input type="file" id="file" multiple (change)="getFileDetails($event)" [(ngModel)]="course.image">    
 <br><br>
 <br><br>
-   <div class="row">
-    </div>
-    <!-- Sign up button -->
-    <button mdbBtn color="info" block="true" routerLink="" class="my-4" type="submit">Submit</button>
-    <button mdbBtn color="info" block="true" routerLink="../step-2"  routerLink="" class="my-4" type="submit">Back</button>
+<div *ngIf="error">
+<p style="color:red;">{{errorString}}</p>
+</div>
+<div class="row">
+</div>
+<!-- Sign up button -->
+<button mdbBtn color="info" block="true" class="my-4" type="submit"  (click)="uploadFiles()">Submit</button>
+<button mdbBtn color="info" block="true" routerLink="../step-2"  routerLink="" class="my-4" type="submit">Back</button>
 
-    <!-- Social register -->
-    <hr>
-  </form>
-  <!-- Default form register -->
+<!-- Social register -->
+<hr>
+<!-- Default form register -->

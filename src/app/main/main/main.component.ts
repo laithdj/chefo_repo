@@ -28,12 +28,14 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/details']);
   }
   registerCategory(){
-/*
+    const element = new Category();
+    element.image = "http://www.chefo.co/assets/fitness.jpg";
+    element.name = "Fitness" 
     this.mainservice.registerCategory(element).subscribe(data => {
       if (data) {
       }
     });
-*/
+
   }
   getCategories() {
     this.mainservice.getCategories().subscribe(response => {

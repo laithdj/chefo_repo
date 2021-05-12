@@ -1,0 +1,11 @@
+::ng-deep .img-fluid, .video-fluid {
+    height: 322px !important;
+}
+
+::ng-deep .card-body {
+    height: 240px;
+}
+::ng-deep .card .card-body .card-text {
+    overflow: hidden;
+    height: 40px;
+}

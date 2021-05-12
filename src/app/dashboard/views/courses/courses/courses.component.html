@@ -26,7 +26,7 @@
         </mdb-card>
       </div>
     -->
-    <div class="col-md-4" *ngFor="let course of courses;let i = index">
+    <div class="col-md-4 mt-2" *ngFor="let course of courses;let i = index">
       <mdb-card cascade="true" narrower="true">
         <div class="view view-cascade overlay waves-light" mdbWavesEffect>
           <mdb-card-img src={{courses[i].image}}></mdb-card-img>
@@ -40,7 +40,7 @@
           </mdb-card-text>
           <h5 class="orange-text">
             $ {{courses[i].price}}</h5>
-          <!--<a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['edit-course']">Edit</a>-->
+          <a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['edit-course/step1' , courses[i]._id]">Edit</a>
         </mdb-card-body>
       </mdb-card>
     </div>

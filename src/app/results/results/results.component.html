@@ -32,13 +32,13 @@
       </div>
       <mdb-card-body cascade="true" class="text-center">
         <h5 class="orange-text">
-          {{courses[i].category}}</h5>
-        <h4 class="card-title">{{courses[i].name}}</h4>
+          {{courses[i].name}}</h5>
+        <h4 class="card-title">{{courses[i].category}}</h4>
         <mdb-card-text>
-          {{courses[i].description}}
+          {{courses[i].instructor}}
         </mdb-card-text>
-        <h5 class="orange-text">
-         ${{courses[i].price}}</h5>
+        <!--<h5 class="orange-text">
+         ${{courses[i].price}}</h5>-->
         <a mdbBtn color="unique" class="waves-light orange darken-4" mdbWavesEffect [routerLink]="['../../details/' , courses[i]._id]">Enrol</a>
       </mdb-card-body>
     </mdb-card>

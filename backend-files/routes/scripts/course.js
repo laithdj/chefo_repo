@@ -91,14 +91,22 @@ module.exports = {
         }
     },
 
-    deleteCourseById: async (req, res) => {
+    updateCourses: async (req, res) => {
+        const id = req.params.courseId;
         try {
-            Course.findOneAndDelete({ _id: req.params.courseId }).exec((err, feedbacks) => {
-                if (err)
-                    console.log(err);
-                else
-                    res.send({ "Success": true, "message": "Course Deleted Successfully!" });
-            })
+            let contactUser = await Course.findOneAndUpdate(id,{
+                name: req.body.name,
+                description: req.body.description,
+                instructor: req.body.instructor,
+                price: req.body.price,
+                category: req.body.category,
+                courseCategory: req.body.courseCategory,
+                courseVids: req.body.courseVids,
+                students: req.body.students,
+                rating: req.body.rating,
+                image:req.body.image
+            });
+            res.send({ "Success": true, "message": "Your Course has been Updated!" })
         } catch (err) {
             res.send({ "Success": false, err })
         }

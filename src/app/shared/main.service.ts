@@ -169,6 +169,14 @@ export class MainService {
         catchError(this.handleError)
       )
   }
+  updateCourse(id:number,item:Course): Observable<any> {
+    return this.http
+      .patch<any>(this.base_url + 'updateCourse/'+id,item, {})
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
 
   // Get single Employee data by ID
   getItem(id): Observable<any> {
