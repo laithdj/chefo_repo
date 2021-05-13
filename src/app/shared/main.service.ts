@@ -7,6 +7,7 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Course } from '../models/Course';
 import { Category } from '../models/Category';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { Category } from '../models/Category';
 export class MainService {
   // cartdata: any = [];
   course: Course = new Course();
+  user:User = new User();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
  // base_url = 'http://chefo.herokuapp.com/';
@@ -66,14 +68,7 @@ export class MainService {
         return data;
       }));
   }
-  getInstructor(id: number) {
-    return this.http.get<any>(this.base_url + 'getInstructor/' + id, {})
-      .pipe(map(data => {
-        if (data) {
-        }
-        return data;
-      }));
-  }
+
   deleteCourse(id: number) {
     return this.http.get<any>(this.base_url + 'deleteCourse/' + id, {})
       .pipe(map(data => {
@@ -114,14 +109,7 @@ export class MainService {
         return data;
       }));
   }
-  registerInstructor() {
-    return this.http.get<any>(this.base_url + 'createInstructor', {})
-      .pipe(map(data => {
-        if (data) {
-        }
-        return data;
-      }));
-  }
+
   ///////////////////////////////////
    // Http Options
 
@@ -169,6 +157,14 @@ export class MainService {
         catchError(this.handleError)
       )
   }
+  registerInstructor(user:User): Observable<any> {
+    return this.http.post<User>(this.base_url + 'createInstructor', user,{})
+      .pipe(map(data => {
+        if (data) {
+        }
+        return data;
+      }));
+  }
   updateCourse(id:number,item:Course): Observable<any> {
     return this.http
       .patch<any>(this.base_url + 'updateCourse/'+id,item, {})
@@ -176,6 +172,14 @@ export class MainService {
         retry(2),
         catchError(this.handleError)
       )
+  }
+  getInstructor(id: number) {
+    return this.http.get<any>(this.base_url + 'getInstructor/' + id, {})
+      .pipe(map(data => {
+        if (data) {
+        }
+        return data;
+      }));
   }
 
   // Get single Employee data by ID
@@ -205,6 +209,7 @@ export class MainService {
         catchError(this.handleError)
       )
   }
+  
   getCategories(): Observable<any> {
     return this.http
       .get<any>(this.base_url + 'getCategories')

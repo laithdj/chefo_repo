@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MainService } from '../../../../shared/main.service';
+import { User } from '../../../../models/User';
 
 @Component({
   selector: 'app-dashboard1',
@@ -13,6 +16,7 @@ export class Dashboard1Component implements OnInit {
   public chart3Type:string = 'line';
   public chart4Type:string = 'radar';
   public chart5Type:string = 'doughnut';
+  user: User = new User();
 
 
   public chartType = 'line';
@@ -55,11 +59,25 @@ export class Dashboard1Component implements OnInit {
     }
   };
 
-  constructor() {
-  
+  constructor(private router: ActivatedRoute,private mainService: MainService) {
+    
+    this.router.params.subscribe(params => {
+      let userId = params.id;
+      this.getInstructor(userId);
+    });
   }
 
   ngOnInit() {
+    this.mainService.user = new User();
   }
-
+  getInstructor(userId:number){
+    
+    this.mainService.getInstructor(userId).subscribe(response => {
+      if (response) {
+      //  this.user = response.InstructorDetails[0];
+        this.mainService.user = response;
+      console.log(this.mainService.user);
+      }
+    });
+  }
 }

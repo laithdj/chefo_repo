@@ -51,8 +51,8 @@ router.patch('/updateCourse/:courseId', (req, res) => {
     course.updateCourses(req, res);
 });
 
-router.get('/createCourse', (req, res) => {
-  course.registerCourses(req, res);
+router.post('/createCourse', (req, res,err) => {
+  course.registerCourses(req, res,err);
 });
 // Delete Course By ID
 router.get('/deleteCourse/:courseId', (req, res) => {

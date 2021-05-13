@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../shared/main.service';
 import { Course } from '../../models/Course';
 import { Category } from '../../models/Category';
+import { User } from '../../models/User';
 export class Search {
   name?: string;
   courseCategory?: string;
@@ -60,7 +61,18 @@ export class MainComponent implements OnInit {
       });
     });    */
   }
+  registerInstructor(){
+    const element = new User();
+    element.image = "";
+    element.name = "Laith Ajail"
+    element.revenue = 0;
+    element.students = 0;
+    this.mainservice.registerInstructor(element).subscribe(data => {
+      if (data) {
 
+      }
+    });
+  }
 
 
   searchCourse() {

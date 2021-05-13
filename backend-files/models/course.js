@@ -14,6 +14,10 @@ let courseSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    instructorId: {
+        type: String,
+        default: null
+    },
     price: {
         type: Number,
         default: null

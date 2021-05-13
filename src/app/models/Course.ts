@@ -5,6 +5,7 @@ export class Course {
     name?: string;
     description?: string;
     instructor?: string;
+    instructorId?: number;
     price?: string;
     category?: string;
     courseCategory?: string[];

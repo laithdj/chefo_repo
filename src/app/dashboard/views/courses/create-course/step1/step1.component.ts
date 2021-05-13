@@ -15,8 +15,11 @@ export class Step1Component implements OnInit {
   constructor(private mainservice:MainService, private route: Router) { }
 
   ngOnInit(): void {
+
   }
   submit(c:Course){
+    c.instructor = this.mainservice.user.name;
+    c.instructorId = this.mainservice.user._id;
     this.errorString = ''
      if(!c.name){
       this.errorString = this.errorString + ' ' + 'Please add a course name.';

@@ -32,7 +32,7 @@ export class ResultsComponent implements OnInit {
   }
   getCourses() {
     this.mainservice.getCourses().subscribe(res => {
-      if (res.data) {
+      if (res) {
         this.courses = res.data.filter(c => c.category === this.category);;
     //    this.courses.filter(c => c.category === this.category);
         //  this.courseLoaded = false;

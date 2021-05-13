@@ -2,12 +2,13 @@ let Course = require('../../models/course');
 
 module.exports = {
 
-    registerCourses: async function (req, res) {
+    registerCourses: async function (req, res,err) {
         try {
             let contactUser = await Course.create({
                 name: req.body.name,
                 description: req.body.description,
                 instructor: req.body.instructor,
+                instructorId: req.body.instructorId,
                 price: req.body.price,
                 category: req.body.category,
                 courseCategory: req.body.courseCategory,

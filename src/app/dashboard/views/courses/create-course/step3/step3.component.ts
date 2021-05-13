@@ -21,11 +21,9 @@ export class Step3Component implements OnInit {
 
   ngOnInit(): void {
     this.course = this.mainService.course;
+    console.log(this.course);
   }
-  submit(){
-    console.log(this.mainService.course);
-    this.mainService.createCourse(this.mainService.course);
-  }
+
   getFileDetails(e) {      
     this.selectedFile = <File>e.target.files[0];
     let frmData = new FormData();
