@@ -40,17 +40,30 @@
       <ul class="navbar-nav ml-auto nav-flex-icons">
         <li class="nav-item">
           <a class="nav-link">
-            <div class="btn-group" mdbDropdown *ngIf="loggedIn">
-              <mdb-icon fas icon="user"  mdbDropdownToggle></mdb-icon>
-              <div class="dropdown-menu dropdown-menu-right dropdown-primary">
-                <a class="dropdown-item" [routerLink]="['login']">Account</a>
-                <a class="dropdown-item" href="#">Create Course</a>
-                <a class="dropdown-item" href="#">My Courses</a>
-                <a class="dropdown-item" href="#">My Cart</a>
-                <div class="divider dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Log Out</a>
+            <div *ngIf="(auth.isAuthenticated$ | async) === false">
+              <div class="btn-group" mdbDropdown >
+                <mdb-icon fas icon="user"  mdbDropdownToggle></mdb-icon>
+                <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+                  <div class="divider dropdown-divider"></div>
+                  <a class="dropdown-item" (click)="login()">Sign In</a>
+                </div>
               </div>
             </div>
+
+            <div *ngIf="auth.isAuthenticated$ | async">
+              <div class="btn-group" mdbDropdown >
+                <mdb-icon fas icon="user"  mdbDropdownToggle></mdb-icon>
+                <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+                  <a class="dropdown-item" [routerLink]="['dashboard']">Account</a>
+                  <a class="dropdown-item" href="#">Create Course</a>
+                  <a class="dropdown-item" href="#">My Courses</a>
+                  <a class="dropdown-item" href="#">My Cart</a>
+                  <div class="divider dropdown-divider"></div>
+                  <a class="dropdown-item" (click)="logout()">Log Out</a>
+                </div>
+              </div>
+            </div>
+
           </a>
         </li>
       </ul>

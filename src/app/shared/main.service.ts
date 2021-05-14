@@ -181,6 +181,14 @@ export class MainService {
         return data;
       }));
   }
+  searchTheInstructor(profile: any) {
+    return this.http.post<any>(this.base_url + 'searchInstructor/' ,  profile, {})
+      .pipe(map(data => {
+        if (data) {
+        }
+        return data;
+      }));
+  }
 
   // Get single Employee data by ID
   getItem(id): Observable<any> {

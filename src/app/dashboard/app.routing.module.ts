@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 const routes: Route[] = [
     { path: '', component:AppComponent,children:
     [
-      { path: 'dashboard/:id', component: Dashboard1Component },
+      { path: 'dashboard', component: Dashboard1Component },
       { path: 'courses', loadChildren: () => import('./views/courses/courses.module').then(m => m.CoursesModule)},
     ]
  },

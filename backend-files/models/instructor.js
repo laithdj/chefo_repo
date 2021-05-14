@@ -5,6 +5,10 @@ let instructorSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    userId: {
+        type: String,
+        default: null
+    },
     image: {
         type: String,
         default: null

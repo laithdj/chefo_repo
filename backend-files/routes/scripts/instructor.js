@@ -5,6 +5,7 @@ module.exports = {
         try {
             let User = await Instructor.create({
                 name: req.body.name,
+                userId: req.body.userId,
                 image:req.body.image,
                 students: req.body.students ? req.body.students : 0,
                 revenue:req.body.revenue ? req.body.revenue : 0
@@ -42,14 +43,19 @@ module.exports = {
     },
 
     searchInstructor: async (req, res) => {
-        if (req.body.name !== '') {
-            Instructor.find({ name: req.body.name }, 'name description courses rating').populate('profileImage').populate('instructor').exec(async (err, searchResults) => {
-                res.send({ "Success": true, searchResults });
-            });
-        } else {
-            Instructor.find({}).populate('profileImage').populate('instructor').exec(async (err, searchResults) => {
-                res.send({ "Success": true, searchResults });
-            });
+        const userIds = req.body;
+
+        try {
+            Instructor.find({ userId: req.body.sub }, function(err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  res.json(result);
+                }
+              });
+
+        } catch (err) {
+            res.send({ "Success": false, err })
         }
     },
 

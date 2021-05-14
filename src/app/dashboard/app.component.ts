@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   // this.router.navigate(['dashboard/dashboard/609c8e3be4cb7447f4d8ff55']);
+    this.router.navigate(['dashboard/dashboard/']);
 
   }
   getInstructor(userId:number){

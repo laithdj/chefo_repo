@@ -13,7 +13,8 @@ import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
-
+import { AuthModule } from '@auth0/auth0-angular'
+import { environment as env } from '../environments/environment'
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,9 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
+    AuthModule.forRoot({
+      ...env.auth,
+    })
 
   ],
   providers: [HttpClient],

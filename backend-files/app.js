@@ -7,6 +7,7 @@ let multer = require("multer"),
   cors = require("cors"),
   app = express(),
   index = require('./routes/index');
+  const { auth, requiresAuth } = require('express-openid-connect');
 require('dotenv').config();
 
 mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/chefo?retryWrites=true&w=majority`, {
@@ -21,7 +22,16 @@ mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/ch
     console.log("Could not connected to the Database");
   });
 
-
+app.use(
+  auth({
+    authRequired: false,
+    auth0Logout: true,
+    issuerBaseURL: process.env.ISSUER_BASE_URL,
+    baseURL: process.env.BASE_URL,
+    clientID:process.env.CLIENT_ID,
+    secret: process.env.SECRET
+  })
+)
 app.use(cors({ origin: '*' }));
 app.use(express.static("public"));
 app.use('/uploads', express.static('uploads'));

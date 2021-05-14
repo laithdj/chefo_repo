@@ -23,6 +23,13 @@ module.exports = {
             res.send({ "Success": false, err })
         }
     },
+    LoggedIn: async function (req, res,err) {
+        try {
+            res.send({ "Success": true, "message": "Your Course has been Registered!" })
+        } catch (error) {
+            res.send({ "Success": false, err })
+        }
+    },
     uploadImage: async function (req, res) {
         try {
             let contactUser = await Course.create({

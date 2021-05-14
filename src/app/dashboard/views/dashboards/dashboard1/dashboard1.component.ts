@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MainService } from '../../../../shared/main.service';
 import { User } from '../../../../models/User';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-dashboard1',
@@ -17,7 +18,7 @@ export class Dashboard1Component implements OnInit {
   public chart4Type:string = 'radar';
   public chart5Type:string = 'doughnut';
   user: User = new User();
-
+  profile:any;
 
   public chartType = 'line';
 
@@ -59,16 +60,31 @@ export class Dashboard1Component implements OnInit {
     }
   };
 
-  constructor(private router: ActivatedRoute,private mainService: MainService) {
-    
-    this.router.params.subscribe(params => {
-      let userId = params.id;
-      this.getInstructor(userId);
-    });
+  constructor(private router: ActivatedRoute,private mainService: MainService,public auth: AuthService) {
+    this.auth.user$.subscribe(
+      (profile) => {
+        this.profile = profile;
+        console.log(this.profile);
+        this.validateUser(profile);
+      //  this.createInstructor(profile);
+
+      }
+    );
+
+  //  this.createInstructor(this.profile);
   }
 
   ngOnInit() {
-    this.mainService.user = new User();
+    console.log(this.mainService.user);
+  }
+  validateUser(profile:any){
+    this.mainService.searchTheInstructor(profile).subscribe(response => {
+      if (response.length > 0) {
+        this.mainService.user = response[0];
+      }else{
+        this.createInstructor(profile);
+      }
+    });
   }
   getInstructor(userId:number){
     
@@ -77,6 +93,19 @@ export class Dashboard1Component implements OnInit {
       //  this.user = response.InstructorDetails[0];
         this.mainService.user = response;
       console.log(this.mainService.user);
+      }
+    });
+  }
+  createInstructor(profile:any){
+    let user = new User();
+    user.userId = profile?.sub;
+    user.image = profile?.image;
+    user.name = profile?.name;
+    
+    this.mainService.registerInstructor(user).subscribe(response => {
+      if (response) {
+      //  this.user = response.InstructorDetails[0];
+      console.log(response);
       }
     });
   }

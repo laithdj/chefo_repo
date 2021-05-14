@@ -1,6 +1,6 @@
 export class User {
     _id:number;
-    userId?:number;
+    userId?:string;
     name?: string;
     image?:any;
     students?: number;

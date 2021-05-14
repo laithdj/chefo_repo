@@ -4,6 +4,8 @@ import { MainService } from '../../shared/main.service';
 import { Course } from '../../models/Course';
 import { Category } from '../../models/Category';
 import { User } from '../../models/User';
+import { AuthService } from '@auth0/auth0-angular';
+
 export class Search {
   name?: string;
   courseCategory?: string;
@@ -15,7 +17,7 @@ export class Search {
 })
 export class MainComponent implements OnInit {
 
-  constructor(private router: Router, private mainservice: MainService) { }
+  constructor(private router: Router, private mainservice: MainService, public auth: AuthService) { }
   courses: Course[] = new Array();
   categories: Category[] = new Array();
   search: Search = new Search();
@@ -47,6 +49,7 @@ export class MainComponent implements OnInit {
       }
     });
   }
+
   createCourse() {
     /*
     let course = [

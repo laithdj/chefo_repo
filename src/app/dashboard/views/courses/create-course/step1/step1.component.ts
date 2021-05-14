@@ -19,7 +19,7 @@ export class Step1Component implements OnInit {
   }
   submit(c:Course){
     c.instructor = this.mainservice.user.name;
-    c.instructorId = this.mainservice.user._id;
+    c.instructorId = this.mainservice.user.userId;
     this.errorString = ''
      if(!c.name){
       this.errorString = this.errorString + ' ' + 'Please add a course name.';
