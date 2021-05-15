@@ -17,6 +17,7 @@ export class Step3Component implements OnInit {
   selectedFileUrl = '';
   errorString = '';
   error = false;
+  progress = '';
   constructor(private mainService:MainService,private http: HttpClient,private route:Router) { }
 
   ngOnInit(): void {
@@ -24,7 +25,8 @@ export class Step3Component implements OnInit {
     console.log(this.course);
   }
 
-  getFileDetails(e) {      
+  getFileDetails(e) {
+    this.progress = 'Uploading...';      
     this.selectedFile = <File>e.target.files[0];
     let frmData = new FormData();
     frmData.append("productImage", this.selectedFile, this.selectedFile?.name);
@@ -37,11 +39,23 @@ export class Step3Component implements OnInit {
   
   uploadFiles() {
     this.errorString = ''
-
-    if(!this.mainService.course.image){
-     this.errorString = this.errorString + ' ' + 'Please add a image for the course.';
+    let type = 0;
+    if(!this.selectedFile){
+      this.errorString = this.errorString + ' ' + 'Please select a image';
+     }
+     if((this.selectedFile.type !== 'image/jpeg') || (this.selectedFile.type !== 'image/jpeg')){
+      this.errorString = this.errorString + ' ' + 'Please select a image file';
+     }
+     if((this.selectedFile.type === 'image/jpeg') || (this.selectedFile.type === 'image/jpeg')){
+      type = 1;
+     }
+     
+     if((this.selectedFile)&&(type === 1)&&(!this.mainService.course.image)){
+     this.errorString = this.errorString + ' ' + 'Please wait until image is uploaded';
     }
-
+    if((this.selectedFile)&&(type === 1)&&(this.mainService.course.image)){
+      this.progress = 'Uploaded';
+     }
     if(this.errorString.length > 1){
       this.error = true;
     }else{

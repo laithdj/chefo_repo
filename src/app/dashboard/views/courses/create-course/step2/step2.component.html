@@ -2,9 +2,11 @@
 <p class="h4 mb-4">Upload Course</p>
 <div *ngFor="let video of videos; let i = index">
   <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" [(ngModel)]="videos[i].name" placeholder="Video Title">
-  <input type="file" id="file" multiple (change)="getFileDetails($event , i)">    
+  <input type="file" id="file" multiple (change)="getFileDetails($event , i)">
   <hr>
 </div>
+{{progress}}    
+
 <button mdbBtn color="info" block="true" class="my-4 w-25" type="submit" (click)="addRow()">+ Add</button>
 <br><br>
 <br><br>

@@ -17,6 +17,7 @@ export class EditStep2Component implements OnInit {
   errorString = '';
   error = false;
   videos:VideoItems[] = new Array();
+  progress: string;
   constructor(private mainService:MainService, private route: Router) { }
 
   ngOnInit() {
@@ -24,6 +25,7 @@ export class EditStep2Component implements OnInit {
     console.log(this.mainService.course.courseVids);
   }
   addRow(){
+    this.progress = '';
   //  this.videos[this.videos.length] = new VideoItems();
     let vid = new VideoItems();
     vid.type = "video/mp4";
@@ -31,13 +33,15 @@ export class EditStep2Component implements OnInit {
   }
   submit(){
     this.errorString = ''
+    
+
+
     if(!this.videos[0].name){
      this.errorString = this.errorString + ' ' + 'Please add a name for the video.';
     }
-    if(!this.videos[0].src){
-     this.errorString = this.errorString + ' ' + 'Please add a video for the course.';
+    if((this.selectedFile)&&(this.selectedFile?.type === 'video/mp4')&&(this.checkUploaded())){
+     this.errorString = this.errorString + ' ' + 'Please wait for file to upload.';
     }
-
     if(this.errorString.length > 1){
       this.error = true;
     }else{
@@ -46,15 +50,39 @@ export class EditStep2Component implements OnInit {
     }
 
   }
-  getFileDetails(e:any , index:number) {      
+  checkUploaded(): boolean{
+    let loaded = false;
+    let count = 0;
+    this.videos.forEach(element => {
+      if(element.src){
+        count++;
+      }
+    });
+    if(count === this.videos.length){
+      loaded = true;
+    }
+    return loaded;
+  }
+  getFileDetails(e:any , index:number) { 
+    this.progress = 'Uploading...'     
     this.selectedFile = <File>e.target.files[0];
+    console.log(this.selectedFile);
+    if(this.selectedFile?.type !== 'video/mp4'){
+      this.errorString = this.errorString + ' ' + 'Please select a video';
+     }
     let frmData = new FormData();
     frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
     this.mainService.uploadVideo(frmData).subscribe(response => {
+
       if (response) {
-        this.videos[index].src = response.imageUrl;
+
+       this.videos[index].src = response.body?.videoUrl;
+
+       if((this.selectedFile)&&(this.selectedFile.type === 'video/mp4')&&(this.checkUploaded())){
+        this.progress = 'Uploaded';
+       }
       }
-    });  
+    });
     }
 
 }

@@ -22,6 +22,12 @@
     .page-footer,
     main {
       padding-left: 270px; } }
+      
+      @media (min-width: 1200px) {
+        .navbar,
+        .page-footer,
+        main {
+          padding-left: 270px; } }
   
   @media (max-width: 1199.98px) {
     .sidebar-fixed {
@@ -33,3 +39,40 @@
         background-color: #e65100 !important;
         border-color: #e65100 !important;
     }
+
+    @media (min-width: 1200px) {
+      .breadcrumb{
+        display: none;
+      } }
+
+      /* Style the list */
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #eee;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}

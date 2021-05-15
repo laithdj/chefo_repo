@@ -28,7 +28,39 @@ const storage = multerS3({
     cb(null, Date.now().toString())
   }
 })
-const upload = multer({storage});
+
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const videoFileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'video/mp4') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
+const uploadVideo = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: videoFileFilter
+});
+// const upload = multer({storage});
 
 // MainRoutes
 
@@ -81,10 +113,10 @@ router.post('/upload', function(req, res) {
       return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
     }
 
-    return res.json({'imageUrl': req.file.location});
+    return res.json({'imageUrl': req.file?.location});
   });
 });
-const singleUpload = upload.single('productVideo');
+const singleUpload = uploadVideo.single('productVideo');
 
 router.post('/uploadVideo', function(req, res) {
 
@@ -94,7 +126,7 @@ router.post('/uploadVideo', function(req, res) {
       return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
     }
 
-    return res.json({'imageUrl': req.file.location});
+    return res.json({'videoUrl': req.file?.location});
   });
 });
 /*

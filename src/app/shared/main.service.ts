@@ -143,7 +143,10 @@ export class MainService {
   }
   uploadVideo(item:any): Observable<any> {
     return this.http
-      .post<any>(this.base_url + 'uploadVideo',item, {})
+      .post<any>(this.base_url + 'uploadVideo',item, {
+        reportProgress:true,
+        observe:'events'
+      },)
       .pipe(
         retry(2),
         catchError(this.handleError)

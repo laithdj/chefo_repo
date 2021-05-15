@@ -1,5 +1,6 @@
 <p class="h4 mb-4">Add Course Image</p>
-<img src={{course.image}} width="150" height="170" /><br />
+<img *ngIf="course.image" src={{course.image}} width="150" height="170" /><br />
+<div *ngIf="!course.image">Loading Image</div>
 <input type="file" id="file" multiple (change)="getFileDetails($event)" [(ngModel)]="course.image">    
 <br><br>
 <br><br>
