@@ -2,12 +2,13 @@ let Course = require('../../models/course');
 
 module.exports = {
 
-    registerCourses: async function (req, res) {
+    registerCourses: async function (req, res,err) {
         try {
             let contactUser = await Course.create({
                 name: req.body.name,
                 description: req.body.description,
                 instructor: req.body.instructor,
+                instructorId: req.body.instructorId,
                 price: req.body.price,
                 category: req.body.category,
                 courseCategory: req.body.courseCategory,
@@ -18,6 +19,13 @@ module.exports = {
             });
             res.send({ "Success": true, "message": "Your Course has been Registered!" })
 
+        } catch (error) {
+            res.send({ "Success": false, err })
+        }
+    },
+    LoggedIn: async function (req, res,err) {
+        try {
+            res.send({ "Success": true, "message": "Your Course has been Registered!" })
         } catch (error) {
             res.send({ "Success": false, err })
         }
@@ -90,15 +98,38 @@ module.exports = {
             });
         }
     },
-
-    deleteCourseById: async (req, res) => {
+    search: async (req, res) => {
+        let s = req.params.search;
         try {
-            Course.findOneAndDelete({ _id: req.params.courseId }).exec((err, feedbacks) => {
-                if (err)
-                    console.log(err);
-                else
-                    res.send({ "Success": true, "message": "Course Deleted Successfully!" });
-            })
+            Course.find({ name: {$regex: s, $options:'$i'} }, function(err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  res.json(result);
+                }
+              });
+
+        } catch (err) {
+            res.send({ "Success": false, err })
+        }
+    },
+    updateCourses: async (req, res) => {
+        const id = req.params.courseId;
+        const option = {new: true}
+        try {
+            let contactUser = await Course.findByIdAndUpdate(id,{
+                name: req.body.name,
+                description: req.body.description,
+                instructor: req.body.instructor,
+                price: req.body.price,
+                category: req.body.category,
+                courseCategory: req.body.courseCategory,
+                courseVids: req.body.courseVids,
+                students: req.body.students,
+                rating: req.body.rating,
+                image:req.body.image
+            });
+            res.send({ "Success": true, "message": "Your Course has been Updated!" })
         } catch (err) {
             res.send({ "Success": false, err })
         }

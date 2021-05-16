@@ -3,11 +3,12 @@ module.exports = {
 
     registerInstructor: async function (req, res) {
         try {
-            let contactUser = await Instructor.create({
+            let User = await Instructor.create({
                 name: req.body.name,
-                description: req.body.description,
-                courses: req.body.courses,
-                rating: req.body.rating,
+                userId: req.body.userId,
+                image:req.body.image,
+                students: req.body.students ? req.body.students : 0,
+                revenue:req.body.revenue ? req.body.revenue : 0
             });
             res.send({ "Success": true, "message": "Instructor has been registered!" })
 
@@ -17,19 +18,16 @@ module.exports = {
     },
 
     getInstructorById: async (req, res) => {
+        const id = req.params.instructorId;
         try {
-            Instructor.find({ _id: req.params.instructorId }, 'name description courses rating').populate('course').exec(async (err, InstructorDetails) => {
-                if (err)
-                    console.log(err);
-                else {
-                    if (InstructorDetails && InstructorDetails[0]) {
-                        res.send({ "Success": true, InstructorDetails });
-                    } else {
-                        res.send({ "Success": false, err });
-                    }
+            Instructor.findById(id, function(err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  res.json(result);
                 }
+              });
 
-            })
         } catch (err) {
             res.send({ "Success": false, err })
         }
@@ -45,14 +43,19 @@ module.exports = {
     },
 
     searchInstructor: async (req, res) => {
-        if (req.body.name !== '') {
-            Instructor.find({ name: req.body.name }, 'name description courses rating').populate('profileImage').populate('instructor').exec(async (err, searchResults) => {
-                res.send({ "Success": true, searchResults });
-            });
-        } else {
-            Instructor.find({}).populate('profileImage').populate('instructor').exec(async (err, searchResults) => {
-                res.send({ "Success": true, searchResults });
-            });
+        const userIds = req.body;
+
+        try {
+            Instructor.find({ userId: req.body.sub }, function(err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  res.json(result);
+                }
+              });
+
+        } catch (err) {
+            res.send({ "Success": false, err })
         }
     },
 

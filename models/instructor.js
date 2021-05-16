@@ -5,15 +5,19 @@ let instructorSchema = new mongoose.Schema({
         type: String,
         default: null
     },
-    description: {
+    userId: {
         type: String,
         default: null
     },
-    courses: {
+    image: {
         type: String,
         default: null
     },
-    rating: {
+    students: {
+        type: Number,
+        default: null
+    },
+    revenue: {
         type: Number,
         default: null
     },
@@ -23,3 +27,5 @@ let instructorSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('instructor', instructorSchema);
+
+
