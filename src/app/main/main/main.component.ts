@@ -23,6 +23,7 @@ export class MainComponent implements OnInit {
   search: Search = new Search();
   name: string = '';
   courseLoaded = true;
+  searchField='';
   
   ngOnInit() {
     this.getCategories();
@@ -77,16 +78,8 @@ export class MainComponent implements OnInit {
     });
   }
 
-
-  searchCourse() {
-    console.log(this.name);
-    this.router.navigate(['/results', this.name , '']);
-    /*
-        this.mainservice.searchCourse(s).subscribe(data => {
-          this.courses  =  data.Courses;
-          console.log(this.courses);
-        });
-        */
+  searchCourse(s: string) {
+    this.router.navigate(['/results/',2,s]);
   }
 
 }

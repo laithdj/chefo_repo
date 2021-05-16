@@ -98,7 +98,21 @@ module.exports = {
             });
         }
     },
+    search: async (req, res) => {
+        let s = req.params.search;
+        try {
+            Course.find({ name: {$regex: s, $options:'$i'} }, function(err, result) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  res.json(result);
+                }
+              });
 
+        } catch (err) {
+            res.send({ "Success": false, err })
+        }
+    },
     updateCourses: async (req, res) => {
         const id = req.params.courseId;
         const option = {new: true}

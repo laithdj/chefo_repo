@@ -103,6 +103,9 @@ router.get('/deleteCourse/:courseId', (req, res) => {
 router.post('/searchCourse', (req, res) => {
     course.searchCourses(req, res);
 });
+router.get('/search/:search', (req, res) => {
+  course.search(req, res);
+});
 const imageUpload = upload.single('productImage');
 
 router.post('/upload', function(req, res) {

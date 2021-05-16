@@ -15,6 +15,7 @@ import { User } from '../models/User';
 export class MainService {
   // cartdata: any = [];
   course: Course = new Course();
+  courses: Course[] = new  Array();
   user:User = new User();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
@@ -186,6 +187,14 @@ export class MainService {
   }
   searchTheInstructor(profile: any) {
     return this.http.post<any>(this.base_url + 'searchInstructor/' ,  profile, {})
+      .pipe(map(data => {
+        if (data) {
+        }
+        return data;
+      }));
+  }
+  search(search: string) {
+    return this.http.get<any>(this.base_url + 'search/' + search , {})
       .pipe(map(data => {
         if (data) {
         }

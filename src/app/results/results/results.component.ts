@@ -13,27 +13,39 @@ export class ResultsComponent implements OnInit {
   s: Search = new Search;
   courses: Course[] = new Array();
   category: string;
+  type:any;
+  search:any;
+  searchField:string;
 
   constructor(private route: ActivatedRoute, private mainservice: MainService) {
 
     this.route.params.subscribe(params => {
-      this.category = params.category;
+      this.type = params.type;
+      this.search = params.search;
     });
   }
 
   ngOnInit(): void {
-    this.getCourses();
+    if(this.type === "2"){
+      this.searchCourse(this.search);
+    }else{
+      this.getCourses(this.search);
+    }
   }
-  searchCourse(s: Search) {
-    this.mainservice.searchCourse(s).subscribe(data => {
-      this.courses = data.Courses;
-      console.log(this.courses);
-    });
+  searchCourse(s: string) {
+    console.log(s);
+  //  this.router.navigate(['/results', this.name , '']);
+    
+        this.mainservice.search(s).subscribe(data => {
+          console.log(data);
+          this.courses = data;
+        });
+        
   }
-  getCourses() {
+  getCourses(s:string) {
     this.mainservice.getCourses().subscribe(res => {
       if (res) {
-        this.courses = res.data.filter(c => c.category === this.category);;
+        this.courses = res.data.filter(c => c.category === s);
     //    this.courses.filter(c => c.category === this.category);
         //  this.courseLoaded = false;
       }
