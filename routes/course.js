@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { requiresAuth } = require('express-openid-connect');
+//const { requiresAuth } = require('express-openid-connect');
 
 require('dotenv/config');
 let express = require('express');
@@ -65,16 +65,16 @@ const uploadVideo = multer({
 // MainRoutes
 
 router.get('/', (req, res) => {
-  //  res.send('Udemy Backend Works!')
-    res.send(req.oidc.isAuthenticated() ? 'Udemy Backend Works!' : 'Logged out')
+    res.send('Udemy Backend Works!')
 
 })
+/*
 router.get('/signin',  requiresAuth() ,(req, res) => {
   //  res.send('Udemy Backend Works!')
     res.send(JSON.stringify(req.oidc.user));
     course.LoggedIn(req, res);
 })
-
+*/
 // Get All Course
 router.get('/getCourse', (req, res) => {
     course.getAllCourses(req, res);
