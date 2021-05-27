@@ -43,10 +43,10 @@ export class Step3Component implements OnInit {
     if(!this.selectedFile){
       this.errorString = this.errorString + ' ' + 'Please select a image';
      }
-     if((this.selectedFile.type !== 'image/jpeg') || (this.selectedFile.type !== 'image/jpeg')){
+     if((this.selectedFile.type !== 'image/jpeg') && (this.selectedFile.type !== 'image/png')){
       this.errorString = this.errorString + ' ' + 'Please select a image file';
      }
-     if((this.selectedFile.type === 'image/jpeg') || (this.selectedFile.type === 'image/jpeg')){
+     if((this.selectedFile.type === 'image/jpeg') || (this.selectedFile.type === 'image/png')){
       type = 1;
      }
      

@@ -31,6 +31,7 @@ export class Step2Component implements OnInit {
     console.log(this.videos);
   }
   submit(){
+
     this.errorString = ''
     
     if(!this.selectedFile){
@@ -52,6 +53,8 @@ export class Step2Component implements OnInit {
       this.mainService.course.courseVids = this.videos;
       this.route.navigate(['dashboard/courses/create-course/step-3']);
     }
+
+this.route.navigate(['dashboard/courses/create-course/step-3']);
 
   }
   checkUploaded(): boolean{
