@@ -8,7 +8,7 @@ let multer = require("multer"),
   app = express(),
   index = require('./routes/index');
 //  const { auth, requiresAuth } = require('express-openid-connect');
-require('dotenv').config();
+//require('dotenv').config();
 
 mongoose.connect(`mongodb+srv://laith:zzbawsoldd12@cluster0.7wsww.mongodb.net/chefo?retryWrites=true&w=majority`, {
   useCreateIndex: true,
