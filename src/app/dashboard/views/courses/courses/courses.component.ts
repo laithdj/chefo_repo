@@ -13,7 +13,7 @@ export class CoursesComponent implements OnInit {
   courses: Course[] = new Array();
 
   ngOnInit(): void {
-    this.getCourses()
+    this.getCourses();
   }
   getCourses() {
     this.mainservice.getCourses().subscribe(res => {

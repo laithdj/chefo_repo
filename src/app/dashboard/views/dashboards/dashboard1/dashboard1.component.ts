@@ -81,6 +81,8 @@ export class Dashboard1Component implements OnInit {
     this.mainService.searchTheInstructor(profile).subscribe(response => {
       if (response.length > 0) {
         this.mainService.user = response[0];
+        this.user = response[0];
+        console.log(this.user);
       }else{
         this.createInstructor(profile);
       }

@@ -43,7 +43,7 @@ export class Step2Component implements OnInit {
     if(!this.videos[0].name){
      this.errorString = this.errorString + ' ' + 'Please add a name for the video.';
     }
-    if((this.selectedFile)&&(this.selectedFile?.type === 'video/mp4')&&(this.checkUploaded())){
+    if((this.selectedFile)&&(!this.checkUploaded())){
      this.errorString = this.errorString + ' ' + 'Please wait for file to upload.';
     }
 
@@ -54,7 +54,6 @@ export class Step2Component implements OnInit {
       this.route.navigate(['dashboard/courses/create-course/step-3']);
     }
 
-this.route.navigate(['dashboard/courses/create-course/step-3']);
 
   }
   checkUploaded(): boolean{
@@ -63,10 +62,13 @@ this.route.navigate(['dashboard/courses/create-course/step-3']);
     this.videos.forEach(element => {
       if(element.src){
         count++;
+        
       }
     });
     if(count === this.videos.length){
       loaded = true;
+      this.progress = 'Uploaded';
+
     }
     return loaded;
   }
@@ -83,7 +85,6 @@ this.route.navigate(['dashboard/courses/create-course/step-3']);
        this.videos[index].src = response.body?.videoUrl;
 
        if((this.selectedFile)&&(this.selectedFile.type === 'video/mp4')&&(this.checkUploaded())){
-        this.progress = 'Uploaded';
        }
       }
     });

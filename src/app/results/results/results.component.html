@@ -37,8 +37,8 @@
         <mdb-card-text>
           {{courses[i].instructor}}
         </mdb-card-text>
-        <!--<h5 class="orange-text">
-         ${{courses[i].price}}</h5>-->
+        <h5 class="orange-text">
+         ${{courses[i].price}}</h5>
         <a mdbBtn color="unique" class="waves-light orange darken-4" mdbWavesEffect [routerLink]="['../../../details/' , courses[i]._id]">Enrol</a>
       </mdb-card-body>
     </mdb-card>
