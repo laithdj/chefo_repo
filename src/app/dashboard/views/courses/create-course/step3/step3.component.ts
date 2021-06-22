@@ -36,7 +36,9 @@ export class Step3Component implements OnInit {
       }
     });  
     }
-  
+    back(){
+      this.route.navigate(['dashboard/courses/create-course/step-2']);
+    }
   uploadFiles() {
     this.errorString = ''
     let type = 0;

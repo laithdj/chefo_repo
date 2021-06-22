@@ -31,12 +31,59 @@
             </div>
 -->
             <div class="justify-content-center">
-              <a mdbBtn color="unique" class="w-75 orange darken-4" [routerLink]="['../../video-player/' , course._id]" mdbWavesEffect>Start</a>
+              <a mdbBtn color="unique" class="w-75 orange darken-4" mdbWavesEffect (click)="enrol(course._id)">Start</a>
           </div>
         </div>
         <!-- Grid column -->
     </div>
     <hr class="my-5">
+    <section class="team-section text-center my-5" style="display: inline;">
+
+      <h2 class="h1-responsive font-weight-bold my-5">Reviews</h2>
+      <div *ngIf="auth.isAuthenticated$ | async" class="w-100">
+        <h3>{{username}}</h3>
+        <div class="justify-content-center">
+
+          <textarea class="w-50"></textarea><br/>
+          <div class="rate" style="margin-left:50%">
+            <input type="radio" id="star5" name="rate" value="5" (click)="star(5)"/>
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" (click)="star(4)"/>
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" (click)="star(3)"/>
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" (click)="star(2)"/>
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" (click)="star(1)"/>
+            <label for="star1" title="text">1 star</label>
+          </div>
+          <a mdbBtn color="unique" class="orange darken-4" mdbWavesEffect (click)="review()">Submit</a>
+        </div>
+      </div>
+      <div class="row text-center">
+
+          <div class="col-md-4 mb-md-0 mb-5">
+
+              <div class="testimonial">
+                
+                  <h6 class="font-weight-bold blue-text my-3">Sam S</h6>
+                  <p class="font-weight-normal dark-grey-text">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod
+                      eos id
+                      officiis hic tenetur quae quaerat
+                      ad velit ab hic tenetur.</p>
+                  <div style="color:#880e4f">
+                      <mdb-icon fas icon="star"> </mdb-icon>
+                      <mdb-icon fas icon="star"> </mdb-icon>
+                      <mdb-icon fas icon="star"> </mdb-icon>
+                      <mdb-icon fas icon="star"> </mdb-icon>
+                      <mdb-icon fas icon="star-half"> </mdb-icon>
+                  </div>
+              </div>
+          </div>
+          <hr>
+      </div>
+  </section>
    <!-- <mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
         [animation]="'slide'">
         <mdb-carousel-item *ngFor="let item of slides; let i = index">

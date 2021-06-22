@@ -15,7 +15,7 @@ export class Step1Component implements OnInit {
   constructor(private mainservice:MainService, private route: Router) { }
 
   ngOnInit(): void {
-
+    this.course = this.mainservice.course;
   }
   submit(c:Course){
     c.instructor = this.mainservice.user.name;

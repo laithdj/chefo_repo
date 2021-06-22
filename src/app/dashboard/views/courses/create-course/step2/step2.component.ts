@@ -19,8 +19,13 @@ export class Step2Component implements OnInit {
   constructor(private mainService:MainService, private route: Router) { }
 
   ngOnInit() {
-    this.videos[0] = new VideoItems();
-    this.videos[0].type = "video/mp4";
+    if(this.mainService.course.courseVids?.length > 0){
+      this.videos = this.mainService.course.courseVids;
+    }else{
+      this.videos[0] = new VideoItems();
+      this.videos[0].type = "video/mp4";
+    }
+
   }
   addRow(){
     this.progress = '';
@@ -55,6 +60,9 @@ export class Step2Component implements OnInit {
     }
 
 
+  }
+  back(){
+    this.route.navigate(['dashboard/courses/create-course']);
   }
   checkUploaded(): boolean{
     let loaded = false;

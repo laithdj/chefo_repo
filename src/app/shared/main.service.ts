@@ -19,7 +19,7 @@ export class MainService {
   user:User = new User();
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
-  // base_url = 'http://chefo.herokuapp.com/';
+ //  base_url = 'https://chefo.herokuapp.com/';
   base_url = 'http://localhost:8080/';
 
   // product_id: number;
@@ -177,6 +177,26 @@ export class MainService {
         catchError(this.handleError)
       )
   }
+
+
+  updateVideoCount(id:number,count:number): Observable<any> {
+    return this.http
+      .patch<any>(this.base_url + 'updateVideoCount/'+id+'/'+count, {})
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+  updateMemberCount(id:number,count:number): Observable<any> {
+    return this.http
+      .patch<any>(this.base_url + 'updateMemberCount/'+id+'/'+count, {})
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  
   getInstructor(id: number) {
     return this.http.get<any>(this.base_url + 'getInstructor/' + id, {})
       .pipe(map(data => {
