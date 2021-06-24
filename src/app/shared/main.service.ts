@@ -8,6 +8,7 @@ import { retry, catchError } from 'rxjs/operators';
 import { Course } from '../models/Course';
 import { Category } from '../models/Category';
 import { User } from '../models/User';
+import { vidArray } from '../dashboard/views/courses/create-course/step2/step2.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ import { User } from '../models/User';
 export class MainService {
   // cartdata: any = [];
   course: Course = new Course();
+  uploadedVids: vidArray[] = new Array();
   courses: Course[] = new  Array();
   user:User = new User();
   base_path = 'http://chefo.co:80/courses';

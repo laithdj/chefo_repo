@@ -1,17 +1,24 @@
+
 <p class="h4 mb-4">Add Course Image</p>
 <img *ngIf="course.image" src={{course.image}} width="150" height="170" /><br />
 <div *ngIf="!course.image">Loading Image</div>
-<input type="file" id="file" multiple (change)="getFileDetails($event)" [(ngModel)]="course.image">    
+
+<input type="file" id="file" multiple (change)="getFileDetails($event)">    
+
 <br><br>
 <br><br>
 <div *ngIf="error">
 <p style="color:red;">{{errorString}}</p>
 </div>
+<div *ngIf="loading">
+<p style="color:red;">Loading ... When complete page will automatically redirect</p><br/>
+<p>Progress: {{progressNo}} %</p>
+</div>
 <div class="row">
 </div>
 <!-- Sign up button -->
-<button mdbBtn color="info" block="true" class="my-4" type="submit"  (click)="uploadFiles()">Submit</button>
-<button mdbBtn color="info" block="true" routerLink="../step-2"  routerLink="" class="my-4" type="submit">Back</button>
+<button mdbBtn color="info" block="true" class="my-4"  (click)="uploadFiles()" [disabled]="loading">Submit</button>
+<button mdbBtn color="info" block="true" routerLink="../step-2"  routerLink="" [disabled]="loading" (click)="back()" class="my-4">Back</button>
 
 <!-- Social register -->
 <hr>

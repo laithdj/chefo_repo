@@ -11,28 +11,33 @@
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link waves-light" mdbWavesEffect>Featured<span class="sr-only">(current)</span></a>
+          <a class="nav-link waves-light" [routerLink]="['']" mdbWavesEffect>Featured<span class="sr-only"></span></a>
         </li>
+        <!--
         <li class="nav-item">
           <a class="nav-link waves-light" [routerLink]="['dashboard']" mdbWavesEffect>Join</a>
         </li>
+        -->
+<!--
         <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect>How it works</a>
         </li>
+-->
+
         <!-- Dropdown -->
         <li class="nav-item dropdown" dropdown>
           <a dropdownToggle mdbWavesEffect type="button" class="nav-link  waves-light" mdbWavesEffect>
             Categories<mdb-icon fab icon="buromobelexperte"></mdb-icon></a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Mexican']">Mexican</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Asian']">Asian</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Italian']">Italian</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Middle Eastern']">Middle Eastern</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Indian']">Indian</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'American']">American</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Drinks']">Drinks</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Baking']">Baking</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 'Fitness']">Fitness</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Mexican']">Mexican</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Asian']">Asian</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Italian']">Italian</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Middle Eastern']">Middle Eastern</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Indian']">Indian</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'American']">American</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Drinks']">Drinks</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Baking']">Baking</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['../results/' , 1 , 'Fitness']">Fitness</a>
           </div>
         </li>
       </ul>
@@ -55,9 +60,9 @@
                 <mdb-icon fas icon="user"  mdbDropdownToggle></mdb-icon>
                 <div class="dropdown-menu dropdown-menu-right dropdown-primary">
                   <a class="dropdown-item" [routerLink]="['dashboard']">Account</a>
-                  <a class="dropdown-item" href="#">Create Course</a>
-                  <a class="dropdown-item" href="#">My Courses</a>
-                  <a class="dropdown-item" href="#">My Cart</a>
+                  <a class="dropdown-item"  [routerLink]="['dashboard/courses']">Create Course</a>
+                  <a class="dropdown-item" [routerLink]="['dashboard/courses']">My Courses</a>
+                  <!--<a class="dropdown-item" href="#">My Cart</a>-->
                   <div class="divider dropdown-divider"></div>
                   <a class="dropdown-item" (click)="logout()">Log Out</a>
                 </div>
@@ -71,3 +76,4 @@
     <!-- Collapsible content -->
   </mdb-navbar>
   <!--/.Navbar-->
+  

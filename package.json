@@ -27,6 +27,7 @@
     "@angular/router": "~10.0.3",
     "@auth0/auth0-angular": "^1.5.0",
     "@fortawesome/fontawesome-free": "^5.13.1",
+    "@iplab/ngx-file-upload": "^3.2.0",
     "@progress/kendo-theme-default": "^4.35.0",
     "@types/chart.js": "^2.9.22",
     "@types/googlemaps": "^3.39.13",

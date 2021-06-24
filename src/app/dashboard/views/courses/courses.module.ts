@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses/courses.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
+import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { CreateCourseComponent } from './create-course/create-course.component';
 import { Step1Component } from './create-course/step1/step1.component';
 import { Step2Component } from './create-course/step2/step2.component';
@@ -26,6 +27,7 @@ import { EditStep3Component } from './edit-course/step3/step3.component';
     CoursesRoutingModule,
     HttpClientModule,
     SharedModule,
+    FileUploadModule,
     MDBBootstrapModule.forRoot(),
 
   ],

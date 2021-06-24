@@ -18,6 +18,8 @@ export class EditStep3Component implements OnInit {
   errorString = '';
   error = false;
   progress: string;
+  loading: boolean;
+  progressNo: number;
   constructor(private mainService:MainService,private http: HttpClient,private route:Router) { }
 
   ngOnInit(): void {
@@ -39,35 +41,72 @@ export class EditStep3Component implements OnInit {
       }
     });   
     }
-  
+    back() {
+      this.route.navigate(['dashboard/courses/create-course/step-2']);
+    }
   uploadFiles() {
     this.errorString = ''
     let type = 0;
-    if(!this.selectedFile){
-      this.errorString = this.errorString + ' ' + 'Please select a image';
-     }
-     if((this.selectedFile.type !== 'image/jpeg') || (this.selectedFile.type !== 'image/jpeg')){
-      this.errorString = this.errorString + ' ' + 'Please select a image file';
-     }
-     if((this.selectedFile.type === 'image/jpeg') || (this.selectedFile.type === 'image/jpeg')){
-      type = 1;
-     }
-     
-     if((this.selectedFile)&&(type === 1)&&(!this.mainService.course.image)){
-     this.errorString = this.errorString + ' ' + 'Please wait until image is uploaded';
+    if(!this.course.image){
+      if (!this.selectedFile) {
+        this.errorString = this.errorString + ' ' + 'Please select a image';
+      } else{
+        if ((this.selectedFile?.type !== 'image/jpeg') && (this.selectedFile?.type !== 'image/png')) {
+          this.errorString = this.errorString + ' ' + 'Please select a image file';
+        }
+        if ((this.selectedFile?.type === 'image/jpeg') || (this.selectedFile?.type === 'image/png')) {
+          type = 1;
+        }
+    
+        if ((this.selectedFile) && (type === 1) && (!this.mainService.course.image)) {
+          this.errorString = this.errorString + ' ' + 'Please wait until image is uploaded';
+        }
+        if ((this.selectedFile) && (type === 1) && (this.mainService.course.image)) {
+          this.progress = 'Uploaded';
+        }
+      }
     }
-    if((this.selectedFile)&&(type === 1)&&(this.mainService.course.image)){
-      this.progress = 'Uploaded';
-     }
-    if(this.errorString.length > 1){
+
+
+
+    if (this.errorString.length > 1) {
       this.error = true;
-    }else{
-      this.mainService.updateCourse(this.mainService.course._id,this.mainService.course).subscribe(response => {
-        if(response){
-          this.route.navigate(['dashboard/courses']);
+    } else {
+      let index = 0
+      this.loading = true;
+      let frmData = new FormData();
+
+      this.mainService.uploadedVids[0].array.forEach(element => {
+        this.selectedFile = <File>element[0];
+        console.log(this.selectedFile);
+        frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
+
+        console.log(this.mainService.course.courseVids);
+      });
+      this.mainService.uploadVideo(frmData).subscribe(response => {
+        console.log(response);
+        if(response['loaded'] && response['total']){
+          this.progressNo = Math.round(event['loaded'] / event['total'] * 100);
+          console.log(this.progressNo);
+        }
+        if (response?.body?.videoUrl) {
+          if(this.mainService.course.courseVids.length === response?.body?.videoUrl.length){
+            this.mainService.course.courseVids.forEach(element => {
+              element.src = response.body?.videoUrl[index].location;
+              index++;
+            });
+          }
+          if(this.mainService.course.courseVids.length === index){
+            this.mainService.createCourse(this.mainService.course).subscribe(response => {
+              if(response){
+                this.route.navigate(['dashboard/courses']);
+              }
+            });
+          }
         }
       });
     }
+    console.log(this.mainService.course);
   }
 
 }

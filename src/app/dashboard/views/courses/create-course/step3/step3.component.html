@@ -6,11 +6,15 @@
 <div *ngIf="error">
   <p style="color:red;">{{errorString}}</p>
 </div>
+<div *ngIf="loading">
+  <p style="color:red;">Loading ... When complete page will automatically redirect</p><br/>
+  <p>Progress: {{progressNo}} %</p>
+</div>
    <div class="row">
     </div>
     <!-- Sign up button -->
-    <button mdbBtn color="info" block="true" class="my-4"  (click)="uploadFiles()">Submit</button>
-    <button mdbBtn color="info" block="true" routerLink="../step-2"  routerLink="" (click)="back()" class="my-4">Back</button>
+    <button mdbBtn color="info" block="true" class="my-4"  (click)="uploadFiles()" [disabled]="loading">Submit</button>
+    <button mdbBtn color="info" block="true" routerLink="../step-2"  routerLink="" [disabled]="loading" (click)="back()" class="my-4">Back</button>
 
     <!-- Social register -->
     <hr>

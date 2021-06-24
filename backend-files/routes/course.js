@@ -115,7 +115,7 @@ router.post('/upload', function(req, res) {
     return res.json({'imageUrl': req.file?.location});
   });
 });
-const singleUpload = uploadVideo.single('productVideo');
+const singleUpload = uploadVideo.array('productVideo');
 
 router.post('/uploadVideo', function(req, res) {
 
@@ -125,7 +125,7 @@ router.post('/uploadVideo', function(req, res) {
       return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
     }
 
-    return res.json({'videoUrl': req.file?.location});
+    return res.json({'videoUrl': req.files});
   });
 });
 /*
