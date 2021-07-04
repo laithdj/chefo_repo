@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { VideoItems } from '../../../../../models/Video';
 import { MainService } from '../../../../../shared/main.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ export class vidArray {
   styleUrls: ['./step2.component.scss']
 })
 
-export class Step2Component implements OnInit {
+export class Step2Component implements OnInit, OnDestroy {
   uploadedVids: vidArray[] = new Array();
   myFiles: string[] = [];
   selectedFile: File = null;
@@ -21,6 +21,9 @@ export class Step2Component implements OnInit {
   uploadedFiles: Array<File> = [];
   videos: VideoItems[] = new Array();
   progress: string;
+  loading: boolean;
+  progressNo: number;
+  submitted = false;
   constructor(private mainService: MainService, private route: Router) { }
 
   ngOnInit() {
@@ -36,6 +39,19 @@ export class Step2Component implements OnInit {
     }
 
   }
+  ngOnDestroy(){
+    if(this.submitted){
+      console.log('submitted');
+    }else{
+      console.log('no');
+      this.videos.forEach(element => {        
+        this.mainService.deleteAWS(element.src.substr(46)).subscribe(response => {
+          if(response){
+          }
+        });
+      });
+    }
+  }
   addRow() {
     this.progress = '';
     //  this.videos[this.videos.length] = new VideoItems();
@@ -48,11 +64,10 @@ export class Step2Component implements OnInit {
     console.log(this.videos);
   }
   submit() {
+    this.submitted = true;
     this.errorString = ''
     let index = 0;
     let flag = 0;
-    console.log(this.uploadedVids[0].array);
-    console.log(this.uploadedVids[0].array);
 
     this.videos.forEach(element => {
       if (!element.name) {
@@ -61,13 +76,7 @@ export class Step2Component implements OnInit {
       index++;
     });
     if (this.uploadedVids[0].array?.length < this.videos?.length) {
-
-      //  let i = 0;
-      //  this.uploadedVids[0].array.forEach(element => {
-      //    if(!element[0].size){
       this.errorString = this.errorString + ' ' + 'Please add a video file for item ';
-      //    }
-      // });
     } else {
       let i = 0;
       this.uploadedVids[0].array.forEach(element => {
@@ -83,9 +92,35 @@ export class Step2Component implements OnInit {
     if (this.errorString.length > 1) {
       this.error = true;
     } else {
-      this.mainService.course.courseVids = this.videos;
-      this.mainService.uploadedVids = this.uploadedVids;
-      this.route.navigate(['dashboard/courses/create-course/step-3']);
+      //disable button
+      let index = 0
+      this.loading = true;
+      let frmData = new FormData();
+
+      this.uploadedVids[0].array.forEach(element => {
+        this.selectedFile = <File>element[0];
+        frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
+      });
+      this.mainService.uploadVideo(frmData).subscribe(response => {
+        console.log(response);
+        if(response['loaded'] && response['total']){
+          this.progressNo = Math.round(event['loaded'] / event['total'] * 100);
+        }
+        if (response?.body?.videoUrl) {
+          if(this.videos.length === response?.body?.videoUrl.length){
+            this.videos.forEach(element => {
+              element.src = response.body?.videoUrl[index].location;
+              index++;
+            });
+          }
+          if(this.videos.length === index){
+            //disable button
+            this.mainService.course.courseVids = this.videos;
+            this.mainService.uploadedVids = this.uploadedVids;
+            this.route.navigate(['dashboard/courses/create-course/step-3']);
+          }
+        }
+      });
     }
   }
   back() {
@@ -97,13 +132,11 @@ export class Step2Component implements OnInit {
     this.videos.forEach(element => {
       if (element.src) {
         count++;
-
       }
     });
     if (count === this.videos.length) {
       loaded = true;
       this.progress = 'Uploaded';
-
     }
     return loaded;
   }

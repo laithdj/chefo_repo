@@ -13,30 +13,38 @@ import { vidArray } from '../../create-course/step2/step2.component';
 export class EditStep2Component implements OnInit {
   course: Course = new Course();
   uploadedVids: vidArray[] = new Array();
-
+  loading: boolean;
   myFiles: string[] = [];      
   selectedFile: File = null;
   errorString = '';
+  progressNo: number;
+  submitted = false;
   error = false;
   videos:VideoItems[] = new Array();
   progress: string;
   constructor(private mainService:MainService, private route: Router) { }
 
   ngOnInit() {
-    this.videos = this.mainService.course.courseVids;
-    this.uploadedVids = this.mainService.uploadedVids;
-    if(this.uploadedVids.length < 1){
+    if (this.mainService.course.courseVids?.length > 0) {
+      this.videos = this.mainService.course.courseVids;
+      this.uploadedVids = this.mainService.uploadedVids;
+      if(!this.uploadedVids[0]) {
+
+        this.uploadedVids[0] = new vidArray();
+        this.uploadedVids[0].array = new Array();
+      }
+    } else {
+      this.videos[0] = new VideoItems();
+      this.videos[0].type = "video/mp4";
       this.uploadedVids[0] = new vidArray();
       this.uploadedVids[0].array = new Array();
+
     }
-    console.log(this.mainService.uploadedVids);
   }
   back(){
     this.route.navigate(['dashboard/courses/create-course']);
   }
   addRow(){
-
-
     this.progress = '';
     //  this.videos[this.videos.length] = new VideoItems();
       let vid = new VideoItems();
@@ -48,26 +56,22 @@ export class EditStep2Component implements OnInit {
       console.log(this.videos);
   }
   submit() {
+    this.submitted = true;
     this.errorString = ''
     let index = 0;
     let flag = 0;
-    console.log(this.uploadedVids[0].array);
-    console.log(this.uploadedVids[0].array);
-
+    let count = 0;
     this.videos.forEach(element => {
       if (!element.name) {
         this.errorString = this.errorString + ' ' + 'Please add a name for the video for item. ';
       }
+      if(!element.src){
+        count++;
+      }
       index++;
     });
-    if (this.uploadedVids[0].array?.length < this.videos?.length) {
-
-      //  let i = 0;
-      //  this.uploadedVids[0].array.forEach(element => {
-      //    if(!element[0].size){
+    if (this.uploadedVids[0].array?.length < count) {
       this.errorString = this.errorString + ' ' + 'Please add a video file for item ';
-      //    }
-      // });
     } else {
       let i = 0;
       this.uploadedVids[0].array.forEach(element => {
@@ -83,9 +87,35 @@ export class EditStep2Component implements OnInit {
     if (this.errorString.length > 1) {
       this.error = true;
     } else {
-      this.mainService.course.courseVids = this.videos;
-      this.mainService.uploadedVids = this.uploadedVids;
-      this.route.navigate(['dashboard/courses/edit-course/step-3']);
+      //disable button
+      let index = 0
+      this.loading = true;
+      let frmData = new FormData();
+
+      this.uploadedVids[0].array.forEach(element => {
+        this.selectedFile = <File>element[0];
+        frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
+      });
+      this.mainService.uploadVideo(frmData).subscribe(response => {
+        console.log(response);
+        if(response['loaded'] && response['total']){
+          this.progressNo = Math.round(event['loaded'] / event['total'] * 100);
+        }
+        if (response?.body?.videoUrl) {
+          if(count === response?.body?.videoUrl.length){
+            this.videos.forEach(element => {
+              element.src = response.body?.videoUrl[index].location;
+              index++;
+            });
+          }
+          if(count === index){
+            //disable button
+            this.mainService.course.courseVids = this.videos;
+            this.mainService.uploadedVids = this.uploadedVids;
+            this.route.navigate(['dashboard/courses/edit-course/step-3']);
+          }
+        }
+      });
     }
   }
   checkUploaded(): boolean{
@@ -102,7 +132,7 @@ export class EditStep2Component implements OnInit {
     return loaded;
   }
   getFileDetails(e:any , index:number) { 
-
+    this.mainService.vidChange = true;
     }
 
 }

@@ -4,13 +4,14 @@
   <div *ngFor="let video of videos; let i = index" >
     <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" [(ngModel)]="videos[i].name" placeholder="Video Title">
     <!--<input type="file" id="file" multiple (change)="getFileDetails($event , i)">-->
-    <file-upload [(ngModel)]="uploadedVids[0].array[i]" [multiple]="false"  name="files" (change)="getFileDetails($event , i)" [animation]="true"></file-upload>
+    <file-upload  [(ngModel)]="uploadedVids[0].array[i]" [multiple]="false"  name="files" (change)="getFileDetails($event , i)" [animation]="true"></file-upload>
   
     <hr>
   </div>
 </div>
 
-{{progress}}    
+<p *ngIf="loading">Progress: {{progressNo}} %</p>
+    
 
 <button mdbBtn color="info" block="true" class="my-4 w-25"  (click)="addRow()">+ Add</button>
 <br><br>
@@ -21,8 +22,8 @@
 <div class="row">
 </div>
 <!-- Sign up button -->
-<button mdbBtn color="info" block="true" class="my-4"  (click)="submit()">Next</button>
-<button mdbBtn color="info" block="true" routerLink="" class="my-4" (click)="back()">Back</button>
+<button mdbBtn color="info" block="true" class="my-4"  (click)="submit()" [disabled]="loading">Next</button>
+<button mdbBtn color="info" block="true" routerLink="" class="my-4" (click)="back()" [disabled]="loading">Back</button>
 <!-- Social register -->
 <hr>
 <!-- Default form register -->

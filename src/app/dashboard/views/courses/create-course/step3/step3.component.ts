@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { Course } from '../../../../../models/Course';
 import { MainService } from '../../../../../shared/main.service';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { Route, Router } from '@angular/router';
   templateUrl: './step3.component.html',
   styleUrls: ['./step3.component.scss']
 })
-export class Step3Component implements OnInit {
+export class Step3Component implements OnInit , OnDestroy{
   course: Course = new Course();
   myFiles: string[] = [];
   selectedFile: File = null;
@@ -20,11 +20,25 @@ export class Step3Component implements OnInit {
   progress = '';
   progressNo:any;
   loading = false;
+  submitted = false;
   constructor(private mainService: MainService, private http: HttpClient, private route: Router) { }
 
   ngOnInit(): void {
     this.course = this.mainService.course;
     console.log(this.course);
+  }
+  ngOnDestroy(){
+    if(this.submitted){
+      console.log('submitted');
+    }else{
+      console.log('no');
+      this.mainService.course.courseVids.forEach(element => {        
+        this.mainService.deleteAWS(element.src.substr(46)).subscribe(response => {
+          if(response){
+          }
+        });
+      });
+    }
   }
 
   getFileDetails(e) {
@@ -42,6 +56,7 @@ export class Step3Component implements OnInit {
     this.route.navigate(['dashboard/courses/create-course/step-2']);
   }
   uploadFiles() {
+    this.submitted = true;
     this.errorString = ''
     let type = 0;
     if (!this.selectedFile) {
@@ -66,37 +81,9 @@ export class Step3Component implements OnInit {
     if (this.errorString.length > 1) {
       this.error = true;
     } else {
-      let index = 0
-      this.loading = true;
-      let frmData = new FormData();
-
-      this.mainService.uploadedVids[0].array.forEach(element => {
-        this.selectedFile = <File>element[0];
-        console.log(this.selectedFile);
-        frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
-
-        console.log(this.mainService.course.courseVids);
-      });
-      this.mainService.uploadVideo(frmData).subscribe(response => {
-        console.log(response);
-        if(response['loaded'] && response['total']){
-          this.progressNo = Math.round(event['loaded'] / event['total'] * 100);
-          console.log(this.progressNo);
-        }
-        if (response?.body?.videoUrl) {
-          if(this.mainService.course.courseVids.length === response?.body?.videoUrl.length){
-            this.mainService.course.courseVids.forEach(element => {
-              element.src = response.body?.videoUrl[index].location;
-              index++;
-            });
-          }
-          if(this.mainService.course.courseVids.length === index){
-            this.mainService.createCourse(this.mainService.course).subscribe(response => {
-              if(response){
-                this.route.navigate(['dashboard/courses']);
-              }
-            });
-          }
+      this.mainService.createCourse(this.mainService.course).subscribe(response => {
+        if(response){
+          this.route.navigate(['dashboard/courses']);
         }
       });
     }

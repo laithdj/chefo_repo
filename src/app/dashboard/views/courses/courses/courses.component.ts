@@ -15,6 +15,21 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
     this.getCourses();
   }
+  deleteCourse(id:any, course:any){
+    course?.courseVids.forEach(element => {        
+      this.mainservice.deleteAWS(element.src.substr(46)).subscribe(response => {
+        if(response){
+        }
+      });
+    });
+    console.log(id);
+        this.mainservice.deleteCourse(id).subscribe(res => {
+      if (res) {
+        this.getCourses();
+      }
+    });
+    
+  }
   getCourses() {
     this.mainservice.getCourses().subscribe(res => {
       if (res) {

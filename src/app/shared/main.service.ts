@@ -19,6 +19,8 @@ export class MainService {
   uploadedVids: vidArray[] = new Array();
   courses: Course[] = new  Array();
   user:User = new User();
+  vidChange = false;
+
   base_path = 'http://chefo.co:80/courses';
   base_category = 'http://chefo.co:80/category';
  //  base_url = 'https://chefo.herokuapp.com/';
@@ -72,8 +74,16 @@ export class MainService {
       }));
   }
 
-  deleteCourse(id: number) {
+  deleteCourse(id: any) {
     return this.http.get<any>(this.base_url + 'deleteCourse/' + id, {})
+      .pipe(map(data => {
+        if (data) {
+        }
+        return data;
+      }));
+  }
+  deleteAWS(id: any) {
+    return this.http.get<any>(this.base_url + 'deleteAWS/' + id, {})
       .pipe(map(data => {
         if (data) {
         }

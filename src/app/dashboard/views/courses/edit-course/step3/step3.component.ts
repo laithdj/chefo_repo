@@ -29,7 +29,8 @@ export class EditStep3Component implements OnInit {
     console.log(this.mainService.course);
     this.mainService.createCourse(this.mainService.course);
   }
-  getFileDetails(e) {      
+  getFileDetails(e) {     
+    this.mainService.course.image = null; 
     this.progress = 'Uploading...';
     this.course.image = null;      
     this.selectedFile = <File>e.target.files[0];
@@ -47,7 +48,7 @@ export class EditStep3Component implements OnInit {
   uploadFiles() {
     this.errorString = ''
     let type = 0;
-    if(!this.course.image){
+    if(this.course.image){
       if (!this.selectedFile) {
         this.errorString = this.errorString + ' ' + 'Please select a image';
       } else{
@@ -66,45 +67,48 @@ export class EditStep3Component implements OnInit {
         }
       }
     }
-
-
-
     if (this.errorString.length > 1) {
       this.error = true;
     } else {
       let index = 0
       this.loading = true;
       let frmData = new FormData();
-
       this.mainService.uploadedVids[0].array.forEach(element => {
         this.selectedFile = <File>element[0];
         console.log(this.selectedFile);
         frmData.append("productVideo", this.selectedFile, this.selectedFile?.name);
-
         console.log(this.mainService.course.courseVids);
       });
-      this.mainService.uploadVideo(frmData).subscribe(response => {
-        console.log(response);
-        if(response['loaded'] && response['total']){
-          this.progressNo = Math.round(event['loaded'] / event['total'] * 100);
-          console.log(this.progressNo);
-        }
-        if (response?.body?.videoUrl) {
-          if(this.mainService.course.courseVids.length === response?.body?.videoUrl.length){
-            this.mainService.course.courseVids.forEach(element => {
-              element.src = response.body?.videoUrl[index].location;
-              index++;
-            });
+      if(this.mainService.vidChange){
+        this.mainService.uploadVideo(frmData).subscribe(response => {
+          console.log(response);
+          if(response['loaded'] && response['total']){
+            this.progressNo = Math.round(event['loaded'] / event['total'] * 100);
+            console.log(this.progressNo);
           }
-          if(this.mainService.course.courseVids.length === index){
-            this.mainService.createCourse(this.mainService.course).subscribe(response => {
-              if(response){
-                this.route.navigate(['dashboard/courses']);
-              }
-            });
+          if (response?.body?.videoUrl) {
+            if(this.mainService.course.courseVids.length === response?.body?.videoUrl.length){
+              this.mainService.course.courseVids.forEach(element => {
+                element.src = response.body?.videoUrl[index].location;
+                index++;
+              });
+            }
+            if(this.mainService.course.courseVids.length === index){
+              this.mainService.createCourse(this.mainService.course).subscribe(response => {
+                if(response){
+                  this.route.navigate(['dashboard/courses']);
+                }
+              });
+            }
           }
-        }
-      });
+        });
+      } else {
+        this.mainService.createCourse(this.mainService.course).subscribe(response => {
+          if(response){
+            this.route.navigate(['dashboard/courses']);
+          }
+        });
+      }
     }
     console.log(this.mainService.course);
   }

@@ -41,6 +41,8 @@
           <h5 class="orange-text">
           $ {{courses[i].price}}</h5>
           <a mdbBtn color="primary" class="waves-light" mdbWavesEffect [routerLink]="['edit-course/step1' , courses[i]._id]">Edit</a>
+          <a mdbBtn color="danger" class="waves-light" mdbWavesEffect (click)="deleteCourse(courses[i]._id, courses[i])">Delete</a>
+
         </mdb-card-body>
       </mdb-card>
     </div>
