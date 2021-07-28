@@ -10,7 +10,6 @@ const AWS = require('aws-sdk');
 const Product = require("../models/product");
 const mongoose = require("mongoose");
 const multerS3 = require('multer-s3');
-const stripe = require('stripe')(process.env.SECRET_KEY)
 
 
 
@@ -148,36 +147,6 @@ router.get('/deleteAWS/:key', (req, res) => {
 
 });
 
-router.post('/payment', (req,res) => {
-  stripe.customers.create({
-    email: req.body.stripeEmail,
-    source:req.body.stripeToken,
-    name:'Leith',
-    address:{
-      line1:'23 mountain valley',
-      postal_code:'4017',
-      city:'New Delhi',
-      state:'Delhi',
-      country:'Australia'
-    }
-  })
-  .then((customer) => {
-    return stripe.charges.create({
-      amount: 7000,
-      description:'Web Dev',
-      currency:'USD',
-      customer:customer.id
-    })
-    .then((charge) => {
-      console.log('charge');
-      res.send('success');
-    })
-    .catch((err) => {
-      res.send(err)
-    })
-  })
-
-})
 
 /*
 router.post("/upload", upload.single('productImage'), (req, res, next) => {
