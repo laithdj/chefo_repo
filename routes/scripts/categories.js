@@ -1,5 +1,5 @@
 let Category = require('../../models/categories');
-let CoursaatCategory = require('../../models/CoursaatCategories');
+let CoursaatCategory = require('../../models/coursaatCategories');
 
 module.exports = {
     getAllCategories: async (req, res) => {
