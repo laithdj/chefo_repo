@@ -78,6 +78,19 @@ module.exports = {
             res.send({ "Success": false, err })
         }
     },
+    deleteCourseById: async (req, res) => {
+        try {
+            Course.findOneAndDelete({ _id: req.params.courseId }).exec((err, feedbacks) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.send({ "Success": true, "message": "Course Deleted Successfully!" });
+            })
+        } catch (err) {
+            res.send({ "Success": false, err })
+        }
+
+    },
 
     searchCourses: async (req, res) => {
         if (req.body.name == '' && req.body.courseCategory == '') {

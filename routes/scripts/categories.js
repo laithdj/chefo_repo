@@ -1,4 +1,6 @@
 let Category = require('../../models/categories');
+let CoursaatCategory = require('../../models/CoursaatCategories');
+
 module.exports = {
     getAllCategories: async (req, res) => {
         try {
@@ -11,6 +13,26 @@ module.exports = {
     registerCategory: async function (req, res) {
         try {
             let category = await Category.create({
+                name: req.body.name,
+                image: req.body.image,
+            });
+            res.send({ "Success": true, "message": "Category has been registered!" })
+
+        } catch (error) {
+            res.send({ "Success": false, err })
+        }
+    },
+    getAllCoursaatCategories: async (req, res) => {
+        try {
+            let data = await CoursaatCategory.find({}).sort({ created_at: -1 });
+            res.send({ "Success": true, data });
+        } catch (err) {
+            res.send({ "Success": false, err })
+        }
+    },
+    registerCoursaatCategory: async function (req, res) {
+        try {
+            let category = await CoursaatCategory.create({
                 name: req.body.name,
                 image: req.body.image,
             });

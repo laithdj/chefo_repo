@@ -6,8 +6,15 @@ categories = require('./scripts/categories');
 router.get('/getCategories', (req, res) => {
     categories.getAllCategories(req, res);
 });
+router.get('/getCoursaatCategories', (req, res) => {
+    categories.getAllCoursaatCategories(req, res);
+});
+
 router.post('/registerCategory', (req, res) => {
     categories.registerCategory(req, res);
+});
+router.post('/registerCoursaatCategory', (req, res) => {
+    categories.registerCoursaatCategory(req, res);
 });
 /*
 // Get Instructor By ID

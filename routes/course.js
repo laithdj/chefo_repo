@@ -1,15 +1,17 @@
 const { v4: uuidv4 } = require('uuid');
-//const { requiresAuth } = require('express-openid-connect');
+const { requiresAuth } = require('express-openid-connect');
 
 require('dotenv/config');
 let express = require('express');
 let router = express.Router(),
-course = require('./scripts/course');
+  course = require('./scripts/course');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 const Product = require("../models/product");
 const mongoose = require("mongoose");
 const multerS3 = require('multer-s3');
+const stripe = require('stripe')(process.env.SECRET_KEY)
+
 
 
 const s3 = new AWS.S3({
@@ -22,7 +24,7 @@ const storage = multerS3({
   bucket: process.env.AWS_BUCKET_NAME,
   acl: 'public-read',
   metadata: function (req, file, cb) {
-    cb(null, {fieldName: 'TESTING_META_DATA!'});
+    cb(null, { fieldName: 'TESTING_META_DATA!' });
   },
   key: function (req, file, cb) {
     cb(null, Date.now().toString())
@@ -61,23 +63,23 @@ const uploadVideo = multer({
 // MainRoutes
 
 router.get('/', (req, res) => {
-    res.send('Udemy Backend Works!')
+  //  res.send('Udemy Backend Works!')
+  res.send(req.oidc.isAuthenticated() ? 'Udemy Backend Works!' : 'Logged out')
 
 })
-/*
-router.get('/signin',  requiresAuth() ,(req, res) => {
+router.get('/signin', requiresAuth(), (req, res) => {
   //  res.send('Udemy Backend Works!')
-    res.send(JSON.stringify(req.oidc.user));
-    course.LoggedIn(req, res);
+  res.send(JSON.stringify(req.oidc.user));
+  course.LoggedIn(req, res);
 })
-*/
+
 // Get All Course
 router.get('/getCourse', (req, res) => {
-    course.getAllCourses(req, res);
+  course.getAllCourses(req, res);
 });
 // Get Course By ID
 router.get('/getCourse/:courseId', (req, res) => {
-    course.getCourseById(req, res);
+  course.getCourseById(req, res);
 });
 // Create Courses
 /*
@@ -85,49 +87,98 @@ router.post('/upload',upload.single('productImage'), (req, res,next) => {
     course.registerCourses(req, res);
 });*/
 router.patch('/updateCourse/:courseId', (req, res) => {
-    course.updateCourses(req, res);
+  course.updateCourses(req, res);
 });
 
-router.post('/createCourse', (req, res,err) => {
-  course.registerCourses(req, res,err);
+router.post('/createCourse', (req, res, err) => {
+  course.registerCourses(req, res, err);
 });
+
 // Delete Course By ID
 router.get('/deleteCourse/:courseId', (req, res) => {
-    course.deleteCourseById(req, res);
+  course.deleteCourseById(req, res);
 });
 // Search Course by name and category
 router.post('/searchCourse', (req, res) => {
-    course.searchCourses(req, res);
+  course.searchCourses(req, res);
 });
 router.get('/search/:search', (req, res) => {
   course.search(req, res);
 });
 const imageUpload = upload.single('productImage');
 
-router.post('/upload', function(req, res) {
+router.post('/upload', function (req, res) {
 
-  imageUpload(req, res, function(err) {
-
-    if (err) {
-      return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
-    }
-
-    return res.json({'imageUrl': req.file?.location});
-  });
-});
-const singleUpload = uploadVideo.single('productVideo');
-
-router.post('/uploadVideo', function(req, res) {
-
-  singleUpload(req, res, function(err) {
+  imageUpload(req, res, function (err) {
 
     if (err) {
-      return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
+      return res.status(422).send({ errors: [{ title: 'File Upload Error', detail: err.message }] });
     }
 
-    return res.json({'videoUrl': req.file?.location});
+    return res.json({ 'imageUrl': req.file?.location });
   });
 });
+const singleUpload = uploadVideo.array('productVideo');
+
+router.post('/uploadVideo', function (req, res) {
+
+  singleUpload(req, res, function (err) {
+
+    if (err) {
+      return res.status(422).send({ errors: [{ title: 'File Upload Error', detail: err.message }] });
+    }
+
+    return res.json({ 'videoUrl': req.files });
+  });
+});
+
+router.get('/deleteAWS/:key', (req, res) => {
+
+  var params = { Bucket: process.env.AWS_BUCKET_NAME, Key: req.params.key };
+
+  s3.deleteObject(params, function (err, data) {
+    if (err){
+      res.send({ "Success": false, err });
+
+    } 
+    else {
+      res.send({ "Success": false, err });
+    }
+  });
+
+});
+
+router.post('/payment', (req,res) => {
+  stripe.customers.create({
+    email: req.body.stripeEmail,
+    source:req.body.stripeToken,
+    name:'Leith',
+    address:{
+      line1:'23 mountain valley',
+      postal_code:'4017',
+      city:'New Delhi',
+      state:'Delhi',
+      country:'Australia'
+    }
+  })
+  .then((customer) => {
+    return stripe.charges.create({
+      amount: 7000,
+      description:'Web Dev',
+      currency:'USD',
+      customer:customer.id
+    })
+    .then((charge) => {
+      console.log('charge');
+      res.send('success');
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+  })
+
+})
+
 /*
 router.post("/upload", upload.single('productImage'), (req, res, next) => {
     const product = new Product({
